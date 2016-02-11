@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Lien;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -32,10 +35,13 @@ class LienController extends Controller
     	return redirect('/liste');
     }
 
-    public function destroy(Request $request, Lien $lien)
+    public function destroy(Request $request, User $user, Lien $lien)
 	{
-	    $this->authorize('destroy', $lien);
-	    $lien->delete();
-	    return redirect('/liste');
+	    if (Auth::user()->id === $lien->user->id) {
+		    $lien->delete();
+		    return redirect('/liste');
+        } else {
+            return abort(403);
+        }
 	}
 }

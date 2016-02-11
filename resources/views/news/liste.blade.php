@@ -24,6 +24,8 @@
                                 <td class="table-text">
                                     <div>{{$new->user->name}}</div>
                                 </td>
+                                <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
+                                @if (Auth::user()->id === $new->id)
                                 <td>
                                     <form action="{{ url('poster/'.$new->id) }}" method="POST">
                                         {!! csrf_field() !!}
@@ -32,6 +34,7 @@
                                         <button>X</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -39,7 +42,9 @@
             </div>
         </div>
     @endif
-
+    
+    <!-- Formulaire de post uniquement affiché aux utilisateurs enregistrés -->
+    @if (Auth::check())
     <div class="panel-body">
         @include('common.errors')
         <form action="{{ url('poster') }}" method="POST" class="form-horizontal">
@@ -66,4 +71,5 @@
             </div>
         </form>
     </div>
+    @endif
 @endsection
