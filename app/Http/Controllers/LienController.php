@@ -14,11 +14,9 @@ use App\Repositories\LienRepository;
 
 class LienController extends Controller
 {
-	protected $liens;
 	public function __construct()
     {
         $this->middleware('auth');
-        $this->liens = Lien::get();
     }
 
     public function store(Request $request) {

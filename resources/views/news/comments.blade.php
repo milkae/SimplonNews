@@ -1,33 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (count($news) > 0)
+    @if (count($comments) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liste des News
+                Liste des Commentaires
             </div>
 
             <div class="panel-body">
                 <table class="table table-striped task-table">
                     <thead>
-                        <th>News</th>
+                        <th>Commentaires</th>
                         <th>&nbsp;</th>
                     </thead>
 
                     <tbody>
-                        @foreach ($news as $new)
+                        @foreach ($comments as $comment)
                             <tr>
                                 
                                 <td class="table-text">
-                                    <a href="{{ $new->lien }}">{{ $new->titre }}</a>
+                                    <a href="{{ $comment->lien }}">{{ $comment->comment }}</a>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{$new->user->name}}</div>
+                                    <div>{{$comment->user->name}}</div>
                                 </td>
                                 <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
-                                @if (Auth::check() && Auth::user()->id === $new->id)
+                                @if (Auth::user()->id === $comment->user_id)
                                 <td>
-                                    <form action="{{ url('poster/'.$new->id) }}" method="POST">
+                                    <form action="{{ url('poster/'.$comment->id) }}" method="POST">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
 
@@ -35,9 +35,6 @@
                                     </form>
                                 </td>
                                 @endif
-                                <td>
-                                    <button><a href="{{ url($new->id . '/comments') }}">Commentaires</a></button>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -50,25 +47,18 @@
     @if (Auth::check())
     <div class="panel-body">
         @include('common.errors')
-        <form action="{{ url('poster') }}" method="POST" class="form-horizontal">
+        <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
             {!! csrf_field() !!}
             <div class="form-group">
-                <label for="news-titre" class="col-sm-3 control-label">Titre</label>
+                <label for="news-comment" class="col-sm-3 control-label">Commentaire</label>
                 <div class="col-sm-6">
-                    <input type="text" name="titre" id="news-titre" class="form-control" aria-describedby="http">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="news-lien" class="col-sm-3 control-label">Lien</label>
-                <div class="col-sm-6 input-group">
-                    <span class="input-group-addon" id="http">http://</span>
-                    <input type="text" name="lien" id="news-lien" class="form-control">
+                    <input type="text" name="comment" id="news-comment" class="form-control" aria-describedby="http">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
                     <button type="submit" class="btn btn-default">
-                        <i class="fa fa-plus"></i> Ajouter une news
+                        <i class="fa fa-plus"></i> Ajouter un commentaire
                     </button>
                 </div>
             </div>

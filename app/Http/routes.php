@@ -1,6 +1,7 @@
 <?php
 use App\Lien;
 use App\User;
+use App\Comment;
 use Illuminate\Support\Facades\Input;
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,10 @@ Route::get('/liste', function() {
 Route::post('/poster', 'LienController@store');
 Route::delete('/poster/{lien}', 'LienController@destroy');
     //
+Route::get('{lien}/comments', function(Lien $lien) {
+	$comments = Comment::where('lien_id', $lien)->get();
+	return view('news.comments', ['comments' => $comments]);
+});
+Route::post('/comment', 'CommentController@store');
+Route::delete('/comment/{comment}', 'CommentController@destroy');
 });

@@ -29,7 +29,11 @@
                     <div class="field">
                         <div class="ui left icon input">
                             <i class="lock icon"></i>
+<<<<<<< HEAD
                             <input type="password" name="email" placeholder="Password">
+=======
+                            <input type="password" name="password" placeholder="Password">
+>>>>>>> e82bab9227ed55272b2169942e8ed98ff84b5e19
                         </div>
                     </div>
                     <button class="ui fluid large inverted pink submit button">Login</button>
