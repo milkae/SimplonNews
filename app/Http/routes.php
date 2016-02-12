@@ -32,6 +32,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
+Route::get('/profil', function(){
+	return view('profil.profil');
+});
 Route::get('/liste', function() {
 	$liens = Lien::get();
 	return view('news.liste', ['news' => $liens]);

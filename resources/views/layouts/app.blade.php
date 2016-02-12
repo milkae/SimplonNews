@@ -14,7 +14,7 @@
     <div class="column">
         <nav class="ui large top fixed pointing menu">
         <div class="ui container">
-                <a href="{{ url('/') }}" class="item"><h2 class="header">SimploNewZ</h2></a>
+                <a href="{{ url('/home') }}" class="item"><h2 class="header">SimploNewZ</h2></a>
                 <div class="right menu">
                     <a href="{{ url('/liste') }}" class="item">Newz</a>
                     <a href="{{ url('/profil') }}" class="item">User</a>
