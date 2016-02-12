@@ -25,8 +25,9 @@
                         <div class="ui inline dropdown">
                             <div class="text">
                                 <img class="ui avatar image" src="http://lorempicsum.com/futurama/255/200/2" alt="Profile image"/>                        
-                                {{ Auth::user()->name }} <i class="dropdown icon"></i>
+                                {{ Auth::user()->name }} 
                             </div>
+                            <i class="dropdown icon"></i>
                             <div class="menu">
                                 <div class="active item" data-text="today">Profil</div>
                                 <div class="item" data-text="this week">This Week</div>
