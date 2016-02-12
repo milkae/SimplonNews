@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Simplon News</title>
-    <link rel="stylesheet" href="../node_modules/semantic-ui-css/semantic.min.css">
+    <link rel="stylesheet" href="{{url('assets/semantic-ui/semantic.min.css') }}">
     {{-- <link rel="stylesheet" href=" {{elixir('css/app.css')}} "> --}}
 </head>
 <body id="app-layout">
