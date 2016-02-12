@@ -36,7 +36,7 @@
                                 </td>
                                 @endif
                                 <td>
-                                    <button><a href="{{ url($new->id . '/comments') }}">Commentaires</a></button>
+                                    <button><a href="{{ url('/comments' . $new->id) }}">Commentaires</a></button>
                                 </td>
                             </tr>
                         @endforeach
