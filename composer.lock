@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cdb8bb05e49fa9d61ae310a67672ad9d",
-    "content-hash": "ebf9cc7fe9cf7def57fe22ffb7ce2704",
+    "hash": "e12a15b83955a51b2f1e7fb203a8d779",
+    "content-hash": "4ae64262ea2b786c7b8742fb652713b5",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2226,6 +2226,37 @@
                 "environment"
             ],
             "time": "2015-12-29 15:10:30"
+        },
+        {
+            "name": "wangaz/laravel-semantic-ui-css",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wangaz/laravel-semantic-ui-css.git",
+                "reference": "ffe21bbfbf34928b6628d506b41daadec82e6eb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wangaz/laravel-semantic-ui-css/zipball/ffe21bbfbf34928b6628d506b41daadec82e6eb0",
+                "reference": "ffe21bbfbf34928b6628d506b41daadec82e6eb0",
+                "shasum": ""
+            },
+            "provide": {
+                "jquery/jquery": "2.2.0",
+                "semantic/ui-css": "2.1.8"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Semantic UI Implementation for Laravel",
+            "keywords": [
+                "css",
+                "laravel",
+                "semantic ui"
+            ],
+            "time": "2016-01-20 15:03:49"
         }
     ],
     "packages-dev": [
@@ -2796,16 +2827,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.22",
+            "version": "4.8.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72"
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dfb11aa5236376b4fc63853cf746af39fe780e72",
-                "reference": "dfb11aa5236376b4fc63853cf746af39fe780e72",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6e351261f9cd33daf205a131a1ba61c6d33bd483",
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483",
                 "shasum": ""
             },
             "require": {
@@ -2864,7 +2895,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-02 09:01:21"
+            "time": "2016-02-11 14:56:33"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

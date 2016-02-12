@@ -25,7 +25,7 @@
                                     <div>{{$new->user->name}}</div>
                                 </td>
                                 <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
-                                @if (Auth::check() && Auth::user()->id === $new->id)
+                                @if (Auth::check() && Auth::user()->id == $new->id)
                                 <td>
                                     <form action="{{ url('poster/'.$new->id) }}" method="POST">
                                         {!! csrf_field() !!}

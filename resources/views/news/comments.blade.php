@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ $news->lien }}">{{ $news->titre }}</a>
+            <div>{{$news->user->name}}</div>
+        </div>
+    </div>
     @if (count($comments) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -19,13 +25,14 @@
                             <tr>
                                 
                                 <td class="table-text">
-                                    <a href="{{ $comment->lien }}">{{ $comment->comment }}</a>
+                                    <div>{{ $comment->content }}</div>
                                 </td>
                                 <td class="table-text">
                                     <div>{{$comment->user->name}}</div>
                                 </td>
+
                                 <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
-                                @if (Auth::user()->id === $comment->user_id)
+                                @if (Auth::check() && Auth::user()->id == $comment->user_id)
                                 <td>
                                     <form action="{{ url('poster/'.$comment->id) }}" method="POST">
                                         {!! csrf_field() !!}
@@ -49,6 +56,7 @@
         @include('common.errors')
         <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
             {!! csrf_field() !!}
+            <input type="hidden" name="news" value="{{ $news->id }}">
             <div class="form-group">
                 <label for="news-comment" class="col-sm-3 control-label">Commentaire</label>
                 <div class="col-sm-6">

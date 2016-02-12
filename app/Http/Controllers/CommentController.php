@@ -21,12 +21,12 @@ class CommentController extends Controller
     	$this->validate($request, [
     		'comment' => 'required|max:255',
     	]);
-
-    	$request->user->comments()->create([
-        	'comment' => $request->comment,
+    	$request->user()->comments()->create([
+        	'content' => $request->comment,
+        	'lien_id' => $request->news,
     	]);
 
-    	return redirect($request->lien_id. '/comments');
+    	return redirect('comments/' . $request->news);
     }
 
     public function destroy(Request $request, User $user, Comment $comment)
