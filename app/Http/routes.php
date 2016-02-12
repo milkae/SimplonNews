@@ -41,9 +41,9 @@ Route::get('/liste', function() {
 Route::post('/poster', 'LienController@store');
 Route::delete('/poster/{lien}', 'LienController@destroy');
     //
-Route::get('{lien}/comments', function(Lien $lien) {
+Route::get('/comments/{lien}', function(Lien $lien) {
 	$comments = Comment::where('lien_id', $lien)->get();
-	return view('news.comments', ['comments' => $comments]);
+	return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 });
 Route::post('/comment', 'CommentController@store');
 Route::delete('/comment/{comment}', 'CommentController@destroy');
