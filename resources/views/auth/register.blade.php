@@ -7,41 +7,65 @@
     <div class="ui middle aligned center aligned grid">
         <div class="four wide column">
             <h2 class="ui teal image header">Inscription</h2>
-            <form class="ui large form" role="form" method="POST" action="{{ url('/login') }}">
+            <form class="ui large form" role="form" method="POST" action="{{ url('/register') }}">
                 {!! csrf_field() !!}
-                @if ($errors->has('email'))
-                <div class="ui negative message">
-                    <div class="header">{{ $errors->first('email') }}</div>
-                </div>
-                @endif
-                @if ($errors->has('password'))
-                <div class="ui negative message">
-                    <div class="header">{{ $errors->first('password') }}</div>
-                </div>
-                @endif
-                @if ($errors->has('password'))
-                <div class="ui negative message">
-                    <div class="header">{{ $errors->first('password') }}</div>
-                </div>
-                @endif
+
                 <div class="ui stacked segment">
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="user icon"></i>
-                            <input type="text" name="email" placeholder="E-mail address">
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="name" placeholder="Nom">
+                                
+                                @if ($errors->has('name'))
+                                <div class="ui negative message">
+                                    <div class="header">{{ $errors->first('name') }}</div>
+                                </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            <input type="password" name="email" placeholder="Password">
+
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="email" placeholder="E-mail address">
+
+                                @if ($errors->has('email'))
+                                <div class="ui negative message">
+                                    <div class="header">{{ $errors->first('email') }}</div>
+                                </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="Password">
+                                @if ($errors->has('password'))
+                                <div class="ui negative message">
+                                    <div class="header">{{ $errors->first('password') }}</div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="password" name="email" placeholder="Confirm Password">
+                                <input type="password" name="password_confirmation" placeholder="Confirm Password">
+
+                                @if ($errors->has('password_confirmation'))
+                                <div class="ui negative message">
+                                    <div class="header">{{ $errors->first('password_confirmation') }}</div>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
