@@ -5,6 +5,7 @@ use App\Comment;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -62,4 +63,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::post('/comment', 'CommentController@store');
 	Route::delete('/comment/{comment}', 'CommentController@destroy');
+
+	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
+	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
 });

@@ -10,7 +10,9 @@
         "laravelcollective/html": "~5.0",
         "doctrine/dbal": "v2.4.2",
         "wangaz/laravel-semantic-ui-css": ">=0.3",
-        "league/oauth2-github": "^0.2.0"
+        "league/oauth2-github": "^0.2.0",
+        "adamwathan/eloquent-oauth-l5": "^0.4.2",
+        "laravel/socialite": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -45,6 +45,10 @@
                     <button class="ui fluid large inverted pink submit button">Login</button>
                 </div>
                 <div class="ui message">
+                    <a href="{{url('/auth/github')}}">Se connecter avec Github</a>
+                </div>
+                <div class="ui message">
+                    <a href="{{url('/auth/github')}}">Github</a>
                     <a class="" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                 </div>
             </form>
