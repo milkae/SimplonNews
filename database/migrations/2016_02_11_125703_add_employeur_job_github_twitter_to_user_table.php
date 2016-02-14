@@ -13,7 +13,8 @@ class AddEmployeurJobGithubTwitterToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('nom');
+            $table->string('prenom');
             $table->string('employeur');
             $table->string('job');
             $table->string('github');

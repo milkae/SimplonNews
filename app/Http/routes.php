@@ -2,6 +2,8 @@
 use App\Lien;
 use App\User;
 use App\Comment;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 /*
 |--------------------------------------------------------------------------
@@ -25,29 +27,39 @@ use Illuminate\Support\Facades\Input;
 */
 
 Route::group(['middleware' => ['web']], function () {
-Route::auth();
+	Route::auth();
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/home', function () {
-    return view('home');
-});
-Route::get('/profil', function(){
-	return view('profil.profil');
-});
-Route::get('/liste', function() {
-	$liens = Lien::get();
-	return view('news.liste', ['news' => $liens]);
-});
+	Route::get('/', function () {
+	    return view('welcome');
+	});
 
-Route::post('/poster', 'LienController@store');
-Route::delete('/poster/{lien}', 'LienController@destroy');
-    //
-Route::get('/comments/{lien}', function(Lien $lien) {
-	$comments = Comment::where('lien_id', $lien->id)->get();
-	return view('news.comments', ['comments' => $comments, 'news' => $lien]);
-});
-Route::post('/comment', 'CommentController@store');
-Route::delete('/comment/{comment}', 'CommentController@destroy');
+	Route::get('/home', function () {
+	    return view('home');
+	});
+
+	Route::get('/profil/{user}', function(User $user){
+		$user = User::where('id', $user->id)->first();
+		return view('profil.profil', ['user' => $user]);
+	});
+
+	Route::get('/liste', function() {
+		$liens = Lien::get();
+		return view('news.liste', ['news' => $liens]);
+	});
+
+	Route::get('/comments/{lien}', function(Lien $lien) {
+		$comments = Comment::where('lien_id', $lien->id)->get();
+		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
+	});
+
+	Route::get('/profil', 'ProfilController@index');
+	Route::get('/edit/profil', 'ProfilController@edit');
+	Route::post('edit/profil', 'ProfilController@store');
+
+
+	Route::post('/poster', 'LienController@store');
+	Route::delete('/poster/{lien}', 'LienController@destroy');
+
+	Route::post('/comment', 'CommentController@store');
+	Route::delete('/comment/{comment}', 'CommentController@destroy');
 });
