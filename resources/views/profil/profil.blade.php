@@ -31,7 +31,7 @@
 					<div class="ui segment">
 						<div class="ui container stackable grid">
 							<div class="eight wide column">
-								<img src="http://lorempicsum.com/futurama/255/200/2" alt="Image de Profile" class="ui large rounded image">
+								<img src="{{$user->avatar}}" alt="Image de Profile" class="ui large rounded image">
 							</div>
 							<div class="eight wide left aligned verry padded column">
 								<div class="ui list">
@@ -85,6 +85,7 @@
 										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
 										<input type="text" name="github" value="{{$user->github}}" class="hidden">
 										@endif
+										Karma {{$user->karma}}
 									</div>
 								</div>
 							</div>

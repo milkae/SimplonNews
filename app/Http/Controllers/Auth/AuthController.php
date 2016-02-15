@@ -119,7 +119,8 @@ class AuthController extends Controller
             'name' => $githubUser->nickname,
             'email' => $githubUser->email,
             'github_id' => $githubUser->id,
-            'avatar' => $githubUser->avatar
+            'avatar' => $githubUser->avatar,
+            'github' => 'https://github.com/'.$githubUser->nickname,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Karma;
 use App\Lien;
 use App\Comment;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password', 'email', 'employeur', 'job', 'github', 'twitter', 'github_id', 'avatar'
+        'name', 'password', 'email', 'employeur', 'job', 'github', 'twitter', 'github_id', 'avatar', 'karma'
     ];
 
     /**
@@ -32,5 +33,9 @@ class User extends Authenticatable
 
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function karmas() {
+        return $this->hasMany(Karma::class);
     }
 }

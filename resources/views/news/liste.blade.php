@@ -24,6 +24,18 @@
                                 <td class="table-text">
                                     <div>{{$new->user->name}}</div>
                                 </td>
+                                <td>
+                                    <div>Karma</div>
+                                    <span></span>
+                                    <form action="{{ url('addKarma/'.$new->id) }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        <input type="submit" value="+ {{ count($new->karmas->where('plus', '1')) }}">
+                                    </form>
+                                    <form action="{{ url('removeKarma/'.$new->id) }}" method="POST">
+                                        {!! csrf_field() !!}
+                                        <input type="submit" value="- {{ count($new->karmas->where('moins', '1')) }}">
+                                    </form>
+                                </td>
                                 <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
                                 @if (Auth::check() && Auth::user()->id == $new->id)
                                 <td>
@@ -36,7 +48,7 @@
                                 </td>
                                 @endif
                                 <td>
-                                    <button><a href="{{ url('/comments' . $new->id) }}">Commentaires</a></button>
+                                    <button><a href="{{ url('/comments/' . $new->id) }}">Commentaires</a></button>
                                 </td>
                             </tr>
                         @endforeach

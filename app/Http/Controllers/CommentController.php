@@ -10,7 +10,7 @@ use App\Lien;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CommentController extends Controller
+class CommentController extends KarmaController
 {
 	public function __construct()
     {
@@ -26,6 +26,8 @@ class CommentController extends Controller
         	'lien_id' => $request->news,
     	]);
 
+        $this->cheatKarmaAdd($request->user());
+
     	return redirect('comments/' . $request->news);
     }
 
@@ -33,7 +35,8 @@ class CommentController extends Controller
 	{
 	    if (Auth::user()->id === $comment->user->id) {
 		    $comment->delete();
-		    return redirect('/comments');
+            $this->cheatKarmaRemove($request->user());
+		    return redirect('comments/' . $request->news);
         } else {
             return abort(403);
         }

@@ -43,9 +43,14 @@ Route::group(['middleware' => ['web']], function () {
 		return view('profil.profil', ['user' => $user]);
 	});
 
-	Route::get('/liste', function() {
+	Route::get('/liste/news', function() {
 		$liens = Lien::get();
 		return view('news.liste', ['news' => $liens]);
+	});
+
+	Route::get('liste/users', function() {
+		$users = User::get();
+		return view('profil.liste', ['users' => $users]);
 	});
 
 	Route::get('/comments/{lien}', function(Lien $lien) {
@@ -66,4 +71,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
+
+	Route::post('addKarma/{lien}', 'KarmaController@addKarma');
+	Route::post('removeKarma/{lien}', 'KarmaController@removeKarma');
 });

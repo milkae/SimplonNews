@@ -12,7 +12,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\LienRepository;
 
-class LienController extends Controller
+class LienController extends KarmaController
 {
 	public function __construct()
     {
@@ -29,15 +29,17 @@ class LienController extends Controller
         	'titre' => $request->titre,
         	'lien' => 'http://' . $request->lien,
     	]);
+        $this->cheatKarmaAdd($request->user());
 
-    	return redirect('/liste');
+    	return redirect('/liste/news');
     }
 
     public function destroy(Request $request, User $user, Lien $lien)
 	{
 	    if (Auth::user()->id === $lien->user->id) {
 		    $lien->delete();
-		    return redirect('/liste');
+            $this->cheatKarmaRemove($request->user());
+		    return redirect('/liste/news');
         } else {
             return abort(403);
         }
