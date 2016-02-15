@@ -17,7 +17,7 @@
                     <a href="{{ url('/home') }}" class="item"><h2 class="header">SimploNewZ</h2></a>
                     <div class="right menu">
                         <a href="{{ url('/liste/news') }}" class="item">Newz</a>
-                        <a href="{{ url('/liste/users') }}" class="item">User</a>
+                        <a href="{{ url('/liste/users') }}" class="item">Users</a>
                         @if (Auth::guest())
                         <a href="{{ url('/login') }}" class="item">Login</a>
                         <a href="{{ url('/register') }}" class="item">Sign Up</a>

@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Lien;
+use App\Comment;
+use Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CommentController extends KarmaController
+class CommentController extends Controller
 {
 	public function __construct()
     {
@@ -26,17 +28,18 @@ class CommentController extends KarmaController
         	'lien_id' => $request->news,
     	]);
 
-        $this->cheatKarmaAdd($request->user());
+        $request->user()->increment('karma');
 
     	return redirect('comments/' . $request->news);
     }
 
-    public function destroy(Request $request, User $user, Comment $comment)
+    public function destroy(Request $request, Comment $comment)
 	{
 	    if (Auth::user()->id === $comment->user->id) {
+            $id = $comment->lien_id;
 		    $comment->delete();
-            $this->cheatKarmaRemove($request->user());
-		    return redirect('comments/' . $request->news);
+            $request->user()->decrement('karma');
+		    return redirect('comments/' . $id);
         } else {
             return abort(403);
         }

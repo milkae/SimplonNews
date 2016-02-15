@@ -29,12 +29,12 @@ class KarmaController extends Controller
 		} else {
 			$req = $request->user()->karmas()->where('lien_id', $lien->id)->first();
 			if($req->plus == 1) {
-				$this->cheatKarmaRemove($lien->user);
+				$user->decrement('karma');
 				$req->delete();
 			} else {
-				$this->cheatKarmaAdd($lien->user);
-				$req->delete();
-				$this->addKarma($request, $lien);
+				$user->increment('karma');
+	    		$request->user()->karmas()->increment('plus');
+	    		$request->user()->karmas()->decrement('moins');
 			}
 		}
 		return redirect('/liste');   	
@@ -49,29 +49,13 @@ class KarmaController extends Controller
 		} else {
 			$req = $request->user()->karmas()->where('lien_id', $lien->id)->first();
 			if($req->moins == 1) {
-				$this->cheatKarmaAdd($lien->user);
+				$user->increment('karma');
 				$req->delete();
 			} else {
-				$this->cheatKarmaRemove($lien->user);
-				$req->delete();
-				$this->removeKarma($request, $lien);
+				$user->decrement('karma');
+	    		$request->user()->karmas()->decrement('plus');
+	    		$request->user()->karmas()->increment('moins');
 			}
 		}
 		return redirect('/liste');  	
     }
-
-    public function cheatKarmaAdd(User $user) {
-    	if($user->isAdmin || $user->isSimplon){
-    		$user->increment('karma', 5);
-    	} else {
-    		$user->increment('karma');
-    	}
-    }
-    public function cheatKarmaRemove(User $user) {
-    	if($user->isAdmin || $user->isSimplon){
-    		$user->decrement('karma', 5);
-    	} else {
-    		$user->decrement('karma');
-    	}
-    }
-}

@@ -34,7 +34,7 @@
                                 <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
                                 @if (Auth::check() && Auth::user()->id == $comment->user_id)
                                 <td>
-                                    <form action="{{ url('poster/'.$comment->id) }}" method="POST">
+                                    <form action="{{ url('comment/'.$comment->id) }}" method="POST">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
 
