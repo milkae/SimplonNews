@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         @endif    
-                        <a href="#" class="item">
+                        <a href="/poster" class="item">
                             <button class="ui pink button">Post</button>
                         </a>
                     </div>

@@ -58,12 +58,15 @@ Route::group(['middleware' => ['web']], function () {
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 	});
 
+	Route::get('/poster', function() {
+		return view('news.ajout');
+	});
+
 	Route::get('/profil', 'ProfilController@index');
 	Route::get('/edit/profil', 'ProfilController@edit');
 	Route::post('edit/profil', 'ProfilController@store');
 
-
-	Route::post('/poster', 'LienController@store');
+	Route::post('/poster/store', 'LienController@store');
 	Route::delete('/poster/{lien}', 'LienController@destroy');
 
 	Route::post('/comment', 'CommentController@store');

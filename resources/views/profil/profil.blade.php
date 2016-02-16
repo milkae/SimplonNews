@@ -31,7 +31,7 @@
 					<div class="ui segment">
 						<div class="ui container stackable grid">
 							<div class="eight wide column">
-								<img src="{{$user->avatar}}" alt="Image de Profile" class="ui large rounded image">
+								<img src="{{$user->avatar}}" alt="Image de Profil" class="ui large rounded image">
 							</div>
 							<div class="eight wide left aligned verry padded column">
 								<div class="ui list">
