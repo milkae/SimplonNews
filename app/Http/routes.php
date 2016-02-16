@@ -44,7 +44,7 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/liste/news', function() {
-		$liens = Lien::get();
+		$liens = Lien::paginate(10);
 		return view('news.liste', ['news' => $liens]);
 	});
 
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/comments/{lien}', function(Lien $lien) {
-		$comments = Comment::where('lien_id', $lien->id)->get();
+		$comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 	});
 
@@ -70,7 +70,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::delete('/poster/{lien}', 'LienController@destroy');
 
 	Route::post('/comment', 'CommentController@store');
+	Route::post('/comment/comment', 'CommentController@storecomment');
 	Route::delete('/comment/{comment}', 'CommentController@destroy');
+	Route::delete('/comment/comment/{comment}', 'CommentController@destroycomment');
 
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');

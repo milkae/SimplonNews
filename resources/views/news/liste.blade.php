@@ -26,7 +26,6 @@
                                 </td>
                                 <td>
                                     <div>Karma</div>
-                                    <span></span>
                                     <form action="{{ url('addKarma/'.$new->id) }}" method="POST">
                                         {!! csrf_field() !!}
                                         <input type="submit" value="+ {{ count($new->karmas->where('plus', '1')) }}">
@@ -62,4 +61,5 @@
     @if (Auth::check())
         <a href="/poster">Poster une news</a>
     @endif
+    {{ $news->render() }}
 @endsection

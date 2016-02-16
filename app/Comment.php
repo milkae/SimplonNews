@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['content', 'lien_id'];
+    protected $fillable = ['content', 'lien_id', 'comment_id'];
 
     public function user() {
     	return $this->belongsTo(User::class);
@@ -16,5 +16,9 @@ class Comment extends Model
     
     public function lien() {
     	return $this->belongsTo(Lien::class);
+    }
+
+    public function children() {
+    	return $this->hasMany('App\Comment', 'comment_id');
     }
 }

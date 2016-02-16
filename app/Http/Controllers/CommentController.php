@@ -26,6 +26,7 @@ class CommentController extends Controller
     	$request->user()->comments()->create([
         	'content' => $request->comment,
         	'lien_id' => $request->news,
+            'comment_id' => $request->comment_id,
     	]);
 
         $request->user()->increment('karma');

@@ -7,70 +7,23 @@
             <div>{{$news->user->name}}</div>
         </div>
     </div>
-    @if (count($comments) > 0)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Liste des Commentaires
-            </div>
-
-            <div class="panel-body">
-                <table class="table table-striped task-table">
-                    <thead>
-                        <th>Commentaires</th>
-                        <th>&nbsp;</th>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($comments as $comment)
-                            <tr>
-                                
-                                <td class="table-text">
-                                    <div>{{ $comment->content }}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{$comment->user->name}}</div>
-                                </td>
-
-                                <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
-                                @if (Auth::check() && Auth::user()->id == $comment->user_id)
-                                <td>
-                                    <form action="{{ url('comment/'.$comment->id) }}" method="POST">
-                                        {!! csrf_field() !!}
-                                        {!! method_field('DELETE') !!}
-
-                                        <button>X</button>
-                                    </form>
-                                </td>
-                                @endif
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    @endif
-    
-    <!-- Formulaire de post uniquement affiché aux utilisateurs enregistrés -->
     @if (Auth::check())
-    <div class="panel-body">
+        <a href="" class="comment-res">Commenter</a>
         @include('common.errors')
-        <form action="{{ url('comment') }}" method="POST" class="form-horizontal">
+        <form action="{{ url('comment') }}" method="POST" class="hidden">
             {!! csrf_field() !!}
             <input type="hidden" name="news" value="{{ $news->id }}">
-            <div class="form-group">
-                <label for="news-comment" class="col-sm-3 control-label">Commentaire</label>
-                <div class="col-sm-6">
-                    <input type="text" name="comment" id="news-comment" class="form-control" aria-describedby="http">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-default">
-                        <i class="fa fa-plus"></i> Ajouter un commentaire
-                    </button>
-                </div>
-            </div>
+            <input type="hidden" name="comment_id" value="">
+            <input type="text" name="comment" placeholder="Commentaire">
+            <button type="submit">Send</button>
         </form>
-    </div>
+    @endif
+    @if (count($comments) > 0)
+        <div class="panel-heading">
+            Liste des Commentaires
+        </div>
+        <ul>
+            @each('news.commentsview', $comments, 'comment')
+        </ul>
     @endif
 @endsection

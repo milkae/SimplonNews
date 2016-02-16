@@ -20,42 +20,43 @@ class KarmaController extends Controller
     }
 
     public function addKarma(Request $request, Lien $lien) {
-    	if(!Karma::where('user_id', $request->user()->id)->first()) {
+    	if(!Karma::where('user_id', $request->user()->id)->where('lien_id', $lien->id)->first()) {
 	    	$request->user()->karmas()->create([
 	        	'lien_id' => $lien->id,
 	    	]);
-	    	$request->user()->karmas()->increment('plus');
-			$this->cheatKarmaAdd($lien->user);
+	    	$request->user()->karmas()->where('lien_id', $lien->id)->increment('plus');
+	    	$lien->user()->increment('karma');
 		} else {
 			$req = $request->user()->karmas()->where('lien_id', $lien->id)->first();
 			if($req->plus == 1) {
-				$user->decrement('karma');
+				$lien->user->decrement('karma');
 				$req->delete();
 			} else {
-				$user->increment('karma');
-	    		$request->user()->karmas()->increment('plus');
-	    		$request->user()->karmas()->decrement('moins');
+				$lien->user->increment('karma');
+	    		$request->user()->karmas()->where('lien_id', $lien->id)->increment('plus');
+	    		$request->user()->karmas()->where('lien_id', $lien->id)->decrement('moins');
 			}
 		}
-		return redirect('/liste');   	
+		return redirect('/liste/news');   	
     }
     public function removeKarma(Request $request, Lien $lien) {
-    	if(!Karma::where('user_id', $request->user()->id)->first()) {
+    	if(!Karma::where('user_id', $request->user()->id)->where('lien_id', $lien->id)->first()) {
 	    	$request->user()->karmas()->create([
 	        	'lien_id' => $lien->id,
 	    	]);
-	    	$request->user()->karmas()->increment('moins');
-			$this->cheatKarmaRemove($lien->user);
+	    	$request->user()->karmas()->where('lien_id', $lien->id)->increment('moins');
+	    	$lien->user()->decrement('karma');
 		} else {
 			$req = $request->user()->karmas()->where('lien_id', $lien->id)->first();
 			if($req->moins == 1) {
-				$user->increment('karma');
+				$lien->user->increment('karma');
 				$req->delete();
 			} else {
-				$user->decrement('karma');
-	    		$request->user()->karmas()->decrement('plus');
-	    		$request->user()->karmas()->increment('moins');
+				$lien->user->decrement('karma');
+	    		$request->user()->karmas()->where('lien_id', $lien->id)->decrement('plus');
+	    		$request->user()->karmas()->where('lien_id', $lien->id)->increment('moins');
 			}
 		}
-		return redirect('/liste');  	
+		return redirect('/liste/news');  	
     }
+}
