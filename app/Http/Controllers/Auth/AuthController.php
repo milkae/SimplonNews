@@ -6,11 +6,12 @@ use App\User;
 use Validator;
 use Auth;
 use Redirect;
+use Socialite;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Socialite;
 
 class AuthController extends Controller
 {

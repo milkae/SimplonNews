@@ -13,7 +13,7 @@
 						<div class="ui left aligned attached padded segment">
 							<div class="header dividing">{{ $user->name }}</div>
 							@if(url()->current() == url('edit/profil'))
-							<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+							<button class="ui compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 							<input type="text" name="name" value="{{$user->name}}" class="hidden">
 							@endif
 						</div>
@@ -39,7 +39,7 @@
 										<div class="header">Nom</div>
 										{{$user->nom}}
 										@if(url()->current() == url('edit/profil'))
-										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+										<button class="ui compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 										<input type="text" name="nom" value="{{$user->nom}}" class="hidden">
 										@endif
 									</div>
@@ -49,7 +49,7 @@
 										<div class="header">Prénom</div>
 										{{$user->prenom}}
 										@if(url()->current() == url('edit/profil'))
-										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+										<button class="ui compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 										<input type="text" name="prenom" value="{{$user->prenom}}" class="hidden">
 										@endif
 									</div>
@@ -59,7 +59,7 @@
 										<div class="header"><i class="travel icon"></i>Profession</div>
 										{{$user->job}}
 										@if(url()->current() == url('edit/profil'))
-										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+										<button class="ui compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 										<input type="text" name="job" value="{{$user->job}}" class="hidden">
 										@endif
 									</div>
@@ -69,7 +69,7 @@
 										<div class="header">Employeur</div>
 										{{$user->employeur}}
 										@if(url()->current() == url('edit/profil'))
-										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+										<button class="ui compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 										<input type="text" name="employeur" value="{{$user->employeur}}" class="hidden">
 										@endif
 									</div>
@@ -82,7 +82,7 @@
 										</button>
 										<a href="{{$user->github}}">{{ $user->name }}</a>
 										@if(url()->current() == url('edit/profil'))
-										<button class="ui compact icon pink inverted button edit"><i class="setting icon"></i></button>
+										<button class="ui compact icon pink inverted button next"><i class="setting icon"></i></button>
 										<input type="text" name="github" value="{{$user->github}}" class="hidden">
 										@endif
 										Karma {{$user->karma}}

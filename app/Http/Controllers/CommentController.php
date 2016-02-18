@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\User;
-use App\Lien;
 use App\Comment;
 use Auth;
-
 use App\Http\Requests;
+
 use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
@@ -28,9 +26,7 @@ class CommentController extends Controller
         	'lien_id' => $request->news,
             'comment_id' => $request->comment_id,
     	]);
-
         $request->user()->increment('karma');
-
     	return redirect('comments/' . $request->news);
     }
 

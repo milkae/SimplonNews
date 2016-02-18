@@ -11,7 +11,7 @@
         </form>
     @endif
     @if (Auth::check())
-        <a href="" class="comment-res">Répondre</a>
+        <a href="" class="show-next">Répondre</a>
         @include('common.errors')
         <form action="{{ url('comment') }}" method="POST" class="hidden">
             {!! csrf_field() !!}
@@ -22,7 +22,7 @@
         </form>
     @endif
     @if (count($comment->children) > 0)
-        <a href="" class="comment-res">Afficher les réponses</a>
+        <a href="" class="show-next">Afficher les réponses</a>
         <ul class="hidden">
             @each('news.commentsview', $comment->children, 'comment')
         </ul>

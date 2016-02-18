@@ -21,11 +21,6 @@ class ProfilController extends Controller
 		return view('profil.profil', ['user' => $user]);
 	}
 
-	public function edit(Request $request){
-		$user = User::where('id', $request->user()->id)->first();
-		return view('profil.profil', ['user' => $user]);
-	}
-
 	public function store(Request $request){
 		User::where('id', $request->user()->id)->update([
 				'name' => $request->name,

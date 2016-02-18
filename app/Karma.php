@@ -3,7 +3,6 @@
 namespace App;
 
 use App\User;
-use App\Lien;
 use Illuminate\Database\Eloquent\Model;
 
 class Karma extends Model

@@ -6,17 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Simplon News</title>
-    <link rel="stylesheet" href="{{url('assets/semantic-ui/semantic.min.css') }}">
-    <link rel="stylesheet" href=" {{url('css/app.css')}} ">
+<!--     <link rel="stylesheet" href="{{url('assets/semantic-ui/semantic.min.css') }}">
+ -->    <link rel="stylesheet" href=" {{url('css/app.css')}} ">
 </head>
 <body id="app-layout">
     <div class="ui container grid">
         <div class="column">
             <nav class="ui large top fixed menu">
                 <div class="ui container">
-                    <a href="{{ url('/home') }}" class="item"><h2 class="header">SimploNewZ</h2></a>
+                    <a href="{{ url('/') }}" class="item"><h2 class="header">SimploNewZ</h2></a>
                     <div class="right menu">
-                        <a href="{{ url('/liste/news') }}" class="item">Newz</a>
                         <a href="{{ url('/liste/users') }}" class="item">Users</a>
                         @if (Auth::guest())
                         <a href="{{ url('/login') }}" class="item">Login</a>

@@ -21,15 +21,15 @@ class LienController extends Controller
 
     public function store(Request $request) {
     	$this->validate($request, [
-    			'titre' => 'required|max:255',
-    			'lien' => 'required|max:255',
+    			'titre' => 'required|max:60',
+    			'lien' => 'required|max:100',
     	]);
     	$request->user()->liens()->create([
         	'titre' => $request->titre,
-        	'lien' => 'http://' . $request->lien,
+        	'lien' => $request->lien,
     	]);
         $request->user()->increment('karma');
-        return redirect('/liste/news');
+        return redirect('/');
     }
 
     public function destroy(Request $request, User $user, Lien $lien)
@@ -37,7 +37,7 @@ class LienController extends Controller
         if (Auth::user()->id === $lien->user->id) {
             $lien->delete();
             $request->user()->decrement('karma');
-		    return redirect('/liste/news');
+		    return redirect('/');
         } else {
             return abort(403);
         }

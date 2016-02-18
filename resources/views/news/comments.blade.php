@@ -5,10 +5,19 @@
         <div class="panel-heading">
             <a href="{{ $news->lien }}">{{ $news->titre }}</a>
             <div>{{$news->user->name}}</div>
+            <div>Karma</div>
+            <form action="{{ url('addKarma/'.$news->id) }}" method="POST">
+                {!! csrf_field() !!}
+                <input type="submit" value="+ {{ count($news->karmas->where('plus', '1')) }}">
+            </form>
+            <form action="{{ url('removeKarma/'.$news->id) }}" method="POST">
+                {!! csrf_field() !!}
+                <input type="submit" value="- {{ count($news->karmas->where('moins', '1')) }}">
+            </form>
         </div>
     </div>
     @if (Auth::check())
-        <a href="" class="comment-res">Commenter</a>
+        <a href="" class="show-next">Commenter</a>
         @include('common.errors')
         <form action="{{ url('comment') }}" method="POST" class="hidden">
             {!! csrf_field() !!}

@@ -30,9 +30,9 @@ use Illuminate\Support\Facades\Input;
 Route::group(['middleware' => ['web']], function () {
 	Route::auth();
 
-	Route::get('/', function () {
-	    return view('welcome');
-	});
+	// Route::get('/', function () {
+	//     return view('welcome');
+	// });
 
 	Route::get('/home', function () {
 	    return view('home');
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['web']], function () {
 		return view('profil.profil', ['user' => $user]);
 	});
 
-	Route::get('/liste/news', function() {
+	Route::get('/', function() {
 		$liens = Lien::paginate(10);
 		return view('news.liste', ['news' => $liens]);
 	});
@@ -63,16 +63,14 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/profil', 'ProfilController@index');
-	Route::get('/edit/profil', 'ProfilController@edit');
+	Route::get('/edit/profil', 'ProfilController@index');
 	Route::post('edit/profil', 'ProfilController@store');
 
 	Route::post('/poster/store', 'LienController@store');
 	Route::delete('/poster/{lien}', 'LienController@destroy');
 
 	Route::post('/comment', 'CommentController@store');
-	Route::post('/comment/comment', 'CommentController@storecomment');
 	Route::delete('/comment/{comment}', 'CommentController@destroy');
-	Route::delete('/comment/comment/{comment}', 'CommentController@destroycomment');
 
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
