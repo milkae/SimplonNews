@@ -85,7 +85,7 @@
 										<button class="ui compact icon pink inverted button next"><i class="setting icon"></i></button>
 										<input type="text" name="github" value="{{$user->github}}" class="hidden">
 										@endif
-										Karma {{$user->karma}}
+										<div class="right floated header">Karma : {{$user->karma}}</div>
 									</div>
 								</div>
 							</div>

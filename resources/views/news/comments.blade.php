@@ -1,38 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a href="{{ $news->lien }}">{{ $news->titre }}</a>
-            <div>{{$news->user->name}}</div>
-            <div>Karma</div>
-            <form action="{{ url('addKarma/'.$news->id) }}" method="POST">
-                {!! csrf_field() !!}
-                <input type="submit" value="+ {{ count($news->karmas->where('plus', '1')) }}">
-            </form>
-            <form action="{{ url('removeKarma/'.$news->id) }}" method="POST">
-                {!! csrf_field() !!}
-                <input type="submit" value="- {{ count($news->karmas->where('moins', '1')) }}">
-            </form>
-        </div>
-    </div>
+<div><a href="{{ $news->lien }}">{{ $news->titre }}</a></div>
+{{$news->user->name}} | Karma 
+<form class="inlineForm" action="{{ url('addKarma/'.$news->id) }}" method="POST">
+    {!! csrf_field() !!}
+    <button class="ui basic mini compact button">
+    + {{ count($news->karmas->where('plus', '1')) }}
+    </button>
+</form>
+<form class="inlineForm" action="{{ url('removeKarma/'.$news->id) }}" method="POST">
+    {!! csrf_field() !!}
+    <button class="ui basic mini compact button">
+    - {{ count($news->karmas->where('moins', '1')) }}
+    </button>
+</form>
+<div class="ui threaded comments">
     @if (Auth::check())
-        <a href="" class="show-next">Commenter</a>
-        @include('common.errors')
-        <form action="{{ url('comment') }}" method="POST" class="hidden">
+        <form class="ui reply form" action="{{ url('comment') }}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="news" value="{{ $news->id }}">
             <input type="hidden" name="comment_id" value="">
-            <input type="text" name="comment" placeholder="Commentaire">
-            <button type="submit">Send</button>
+            <div class="field">
+              <textarea name="comment"></textarea>
+            </div>
+            <button class="ui primary submit labeled icon button"><i class="icon edit"></i> Commenter </button>
         </form>
     @endif
     @if (count($comments) > 0)
-        <div class="panel-heading">
-            Liste des Commentaires
-        </div>
-        <ul>
-            @each('news.commentsview', $comments, 'comment')
-        </ul>
+        <h5 class="ui dividing header">Commentaires</h5>
+        @each('news.commentsview', $comments, 'comment')
     @endif
+</div>
 @endsection

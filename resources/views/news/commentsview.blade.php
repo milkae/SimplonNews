@@ -1,30 +1,45 @@
 
-<li>
-    <div>{{ $comment->content }}</div>
-    <div>{{$comment->user->name}}</div>
-    <!--Bouton de suppression affiché seulement si l'utilisateur a les droits pour -->
-    @if (Auth::check() && Auth::user()->id == $comment->user_id)
-        <form action="{{ url('comment/'.$comment->id) }}" method="POST">
-            {!! csrf_field() !!}
-            {!! method_field('DELETE') !!}
-            <button>X</button>
-        </form>
-    @endif
-    @if (Auth::check())
-        <a href="" class="show-next">Répondre</a>
-        @include('common.errors')
-        <form action="{{ url('comment') }}" method="POST" class="hidden">
-            {!! csrf_field() !!}
-            <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-            <input type="hidden" name="news" value="{{$comment->lien_id}}">
-            <input type="text" name="comment" class="comment-input" placeholder="Commentaire">
-            <button type="submit" class="comment-btn">Send</button>
-        </form>
-    @endif
+<div class="comment">
+    <a class="avatar"><img src="{{ $comment->user->avatar }}" /></a>
+    <div class="content">
+        <a href="{{ url('/profil/' . $comment->user->id) }}" class="author">{{$comment->user->name}}</a>
+        <div class="metadata">
+            <span class="date">{{ $comment->created_at->format('d/m/y à H:i') }}</span>
+        </div>
+        <div class="text">    
+            {{ $comment->content }}
+        </div>
+        @if (Auth::check())
+            <div class="actions">
+                <a class="reply active">Répondre</a>
+                <a class="edit active">Editer</a>
+                {{ $comment->votes }}
+            <form action="{{ url('comment') }}" method="POST" class="ui reply form hidden">
+                {!! csrf_field() !!}
+                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                <input type="hidden" name="news" value="{{$comment->lien_id}}">
+                <div class="field">
+                    <textarea name="comment"></textarea>
+                </div>
+                <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Poster</button>
+            </form>
+            @if (Auth::check() && Auth::user()->id == $comment->user_id)
+                <form action="{{ url('comment/'.$comment->id) }}" method="POST" class="ui edit form hidden">
+                    {!! csrf_field() !!}
+                    {!! method_field('PUT') !!}
+                    <div class="field">
+                        <textarea name="comment">{{ $comment->content }}</textarea>
+                    </div>
+                    <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Editer</button>
+                </form>
+            @endif
+            </div>   
+        @endif
+    </div>
     @if (count($comment->children) > 0)
-        <a href="" class="show-next">Afficher les réponses</a>
-        <ul class="hidden">
+        <div class="comments">
             @each('news.commentsview', $comment->children, 'comment')
-        </ul>
+        </div>
     @endif
-</li>
+</div>
+<!--Bouton d'édition affiché seulement si l'utilisateur a les droits pour -->

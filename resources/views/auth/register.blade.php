@@ -29,7 +29,7 @@
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <div class="field">
                             <div class="ui left icon input">
-                                <i class="user icon"></i>
+                                <i class="at icon"></i>
                                 <input type="text" name="email" placeholder="E-mail address">
 
                                 @if ($errors->has('email'))
