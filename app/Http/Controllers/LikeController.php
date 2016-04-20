@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Like;
 use App\User;
 use App\Lien;
+use App\Comment;
 use Redirect;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,27 +21,49 @@ class LikeController extends Controller
         $this->middleware('auth');
     }
     public function upVoteLien(Request $request, Lien $lien) {
-		$l = new Like([
-			'user_id' => $request->user()->id,
-			'val' => 1
-			]);
-		$lien->likes()->save($l);
-		$lien->user()->increment('karma');
+		$this->upVote($request->user(), $lien);
 		return back();
     }
 
     public function downVoteLien(Request $request, Lien $lien) {
-		$l = new Like([
-			'user_id' => $request->user()->id,
-			'val' => -1
-			]);
-		$lien->likes()->save($l);
-		$lien->user()->decrement('karma');
+		$this->downVote($request->user(), $lien);
 		return back();
     }
     public function delVoteLien(Request $request, Lien $lien) {
     	$this->delVote($request->user(), $lien);
     	return back();
+    }
+
+    public function upVoteComment(Request $request, Comment $comment) {
+		$this->upVote($request->user(), $comment);
+		return back();
+    }
+
+    public function downVoteComment(Request $request, Comment $comment) {
+		$this->downVote($request->user(), $comment);
+		return back();
+    }
+    public function delVoteComment(Request $request, Comment $comment) {
+    	$this->delVote($request->user(), $comment);
+    	return back();
+    }
+
+    public function upVote($user, $lienOrComment) {
+		$l = new Like([
+			'user_id' => $user->id,
+			'val' => 1
+			]);
+		$lienOrComment->likes()->save($l);
+		$lienOrComment->user()->increment('karma');
+    }
+
+    public function downVote($user, $lienOrComment) {
+		$l = new Like([
+			'user_id' => $user->id,
+			'val' => -1
+			]);
+		$lienOrComment->likes()->save($l);
+		$lienOrComment->user()->decrement('karma');
     }
 
     public function delVote($user, $lienOrComment) {

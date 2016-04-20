@@ -13,26 +13,45 @@
             <div class="actions">
                 <a class="reply active">Répondre</a>
                 <a class="edit active">Editer</a>
-                {{ $comment->votes }}
-            <form action="{{ url('comment') }}" method="POST" class="ui reply form hidden">
-                {!! csrf_field() !!}
-                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                <input type="hidden" name="news" value="{{$comment->lien_id}}">
-                <div class="field">
-                    <textarea name="comment"></textarea>
-                </div>
-                <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Poster</button>
-            </form>
-            @if (Auth::check() && Auth::user()->id == $comment->user_id)
-                <form action="{{ url('comment/'.$comment->id) }}" method="POST" class="ui edit form hidden">
+                {{ $comment->likes->sum('val') }}
+                @if($comment->voted)
+                    <form class="inlineForm" action="{{ url('delCommentVote/'.$comment->id) }}" method="POST">
+                        {!! csrf_field() !!}
+                        @if($comment->voted == 1)
+                            <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
+                        @else
+                            <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
+                        @endif
+                    </form>
+                @else
+                    <form class="inlineForm" action="{{ url('upComment/'.$comment->id) }}" method="POST">
+                        {!! csrf_field() !!}
+                        <button class="ui basic mini compact button">+</button>
+                    </form>
+                    <form class="inlineForm" action="{{ url('downComment/'.$comment->id) }}" method="POST">
+                        {!! csrf_field() !!}
+                        <button class="ui basic mini compact button">-</button>
+                    </form>
+                @endif
+                <form action="{{ url('comment') }}" method="POST" class="ui reply form hidden">
                     {!! csrf_field() !!}
-                    {!! method_field('PUT') !!}
+                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                    <input type="hidden" name="news" value="{{$comment->lien_id}}">
                     <div class="field">
-                        <textarea name="comment">{{ $comment->content }}</textarea>
+                        <textarea name="comment"></textarea>
                     </div>
-                    <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Editer</button>
+                    <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Poster</button>
                 </form>
-            @endif
+                @if (Auth::check() && Auth::user()->id == $comment->user_id)
+                    <form action="{{ url('comment/'.$comment->id) }}" method="POST" class="ui edit form hidden">
+                        {!! csrf_field() !!}
+                        {!! method_field('PUT') !!}
+                        <div class="field">
+                            <textarea name="comment">{{ $comment->content }}</textarea>
+                        </div>
+                        <button type="submit" class="ui primary submit labeled icon button comment-btn"><i class="icon edit"></i>Editer</button>
+                    </form>
+                @endif
             </div>   
         @endif
     </div>

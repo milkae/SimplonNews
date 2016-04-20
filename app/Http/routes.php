@@ -63,6 +63,13 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/comments/{lien}', function(Lien $lien) {
 		$comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
+		foreach($comments as $comment){
+			foreach ($comment->likes as $like) {
+				if($comment->user == Auth::user()){
+					$comment->voted = $like->val;
+				}
+			}
+		}
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 	});
 
@@ -87,4 +94,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('upLink/{lien}', 'LikeController@upVoteLien');
 	Route::post('downLink/{lien}', 'LikeController@downVoteLien');
 	Route::post('delLinkVote/{lien}', 'LikeController@delVoteLien');
+
+	Route::post('upComment/{comment}', 'LikeController@upVoteComment');
+	Route::post('downComment/{comment}', 'LikeController@downVoteComment');
+	Route::post('delCommentVote/{comment}', 'LikeController@delVoteComment');
 });
