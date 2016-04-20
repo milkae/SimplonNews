@@ -41,7 +41,7 @@ class LienController extends Controller
     {
         if (Auth::user()->id === $lien->user->id) {
             $lien->delete();
-            $request->user()->decrement('karma');
+            $lien->user()->decrement('karma');
 		    return redirect('/');
         } else {
             return abort(403);
