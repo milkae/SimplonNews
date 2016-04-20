@@ -45,7 +45,9 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/', function() {
-		$liens = Lien::paginate(10);
+		$liens = Lien::paginate(10)->sortByDesc(function($val, $key){
+			return $val->likes->sum('val');
+		});
 		foreach ($liens as $lien) {
 			foreach ($lien->likes as $like) {
 				if($like->user == Auth::user()){
