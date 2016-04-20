@@ -23,7 +23,7 @@
                     @endif
                     </div>
                     <div class="description">
-                        <i class="empty star icon"></i> {{ $new->votes }}
+                        <i class="empty star icon"></i> {{ $new->likes->sum('val') }}
                         <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
                         @if($new->voted)
                             <form class="inlineForm" action="{{ url('delLinkVote/'.$new->id) }}" method="POST">

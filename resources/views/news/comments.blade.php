@@ -2,19 +2,26 @@
 
 @section('content')
 <div><a href="{{ $news->lien }}">{{ $news->titre }}</a></div>
-{{$news->user->name}} | Karma 
-<form class="inlineForm" action="{{ url('addKarma/'.$news->id) }}" method="POST">
-    {!! csrf_field() !!}
-    <button class="ui basic mini compact button">
-    + {{ count($news->karmas->where('plus', '1')) }}
-    </button>
-</form>
-<form class="inlineForm" action="{{ url('removeKarma/'.$news->id) }}" method="POST">
-    {!! csrf_field() !!}
-    <button class="ui basic mini compact button">
-    - {{ count($news->karmas->where('moins', '1')) }}
-    </button>
-</form>
+{{$news->user->name}} | <i class="empty star icon"></i> {{ $news->likes->sum('val') }} 
+@if($news->voted)
+    <form class="inlineForm" action="{{ url('delLinkVote/'.$news->id) }}" method="POST">
+        {!! csrf_field() !!}
+        @if($news->voted == 1)
+            <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
+        @else
+            <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
+        @endif
+    </form>
+@else
+    <form class="inlineForm" action="{{ url('upLink/'.$news->id) }}" method="POST">
+        {!! csrf_field() !!}
+        <button class="ui basic mini compact button">+</button>
+    </form>
+    <form class="inlineForm" action="{{ url('downLink/'.$news->id) }}" method="POST">
+        {!! csrf_field() !!}
+        <button class="ui basic mini compact button">-</button>
+    </form>
+@endif
 <div class="ui threaded comments">
     @if (Auth::check())
         <form class="ui reply form" action="{{ url('comment') }}" method="POST">
