@@ -2,15 +2,25 @@
 
 @section('content')
         @include('common.errors')
-        <form action="{{ url('poster/store') }}" method="POST">
+        <form class="ui form" action="{{ url('poster/store') }}" method="POST">
             {!! csrf_field() !!}
-            <label for="news-titre">Titre</label>
+            <div class="field">
+                <label for="news-titre">Titre</label>
                 <input type="text" name="titre" id="news-titre">
-            <label for="news-lien">Lien</label>
-            <div class="input-group">
-                <!-- <span class="input-group-addon" id="http">http://</span> -->
+            </div>
+            <div class="field">
+                <label for="news-lien">Lien</label>
                 <input type="url" name="lien" id="news-lien" class="form-control">
             </div>
-            <button type="submit">Ajouter une news</button>
+            <div class="field">
+                <label>Tags</label>
+                <select multiple class="ui dropdown" name="tags[]">
+                <option value="">Selectionnez vos tags</option>
+                @foreach ($tags as $tag)
+                <option value="{{$tag->id}}">{{ $tag->name }}</option>
+                @endforeach
+                </select>
+            </div>
+            <button class="ui button" type="submit">Ajouter une news</button>
         </form>
 @endsection

@@ -2,6 +2,7 @@
 use App\Lien;
 use App\User;
 use App\Comment;
+use App\Tag;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -45,6 +46,13 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/', function() {
 		$liens = Lien::paginate(10);
+		foreach ($liens as $lien) {
+			foreach ($lien->likes as $like) {
+				if($like->user == Auth::user()){
+					$lien->voted = $like->val;
+				}
+			}
+		}
 		return view('news.liste', ['news' => $liens]);
 	});
 
@@ -59,7 +67,8 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/poster', function() {
-		return view('news.ajout');
+		$tags = Tag::all();
+		return view('news.ajout', ['tags' => $tags]);
 	});
 
 	Route::get('/profil', 'ProfilController@index');
@@ -70,11 +79,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::delete('/poster/{lien}', 'LienController@destroy');
 
 	Route::post('/comment', 'CommentController@store');
-	Route::delete('/comment/{comment}', 'CommentController@destroy');
+	Route::put('/comment/{comment}', 'CommentController@edit');
 
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
 
-	Route::post('addKarma/{lien}', 'KarmaController@addKarma');
-	Route::post('removeKarma/{lien}', 'KarmaController@removeKarma');
+	Route::post('upLink/{lien}', 'LikeController@upVoteLien');
+	Route::post('downLink/{lien}', 'LikeController@downVoteLien');
+	Route::post('delLinkVote/{lien}', 'LikeController@delVoteLien');
 });

@@ -27,7 +27,7 @@ class CommentController extends Controller
             'comment_id' => $request->comment_id,
     	]);
         $request->user()->increment('karma');
-    	return redirect('comments/' . $request->news);
+    	return back();
     }
 
     public function destroy(Request $request, Comment $comment)
@@ -36,9 +36,17 @@ class CommentController extends Controller
             $id = $comment->lien_id;
 		    $comment->delete();
             $request->user()->decrement('karma');
-		    return redirect('comments/' . $id);
+		    return back();
         } else {
             return abort(403);
         }
 	}
+    public function edit(Request $request, Comment $comment)
+    {
+       $this->validate($request, [
+            'comment' => 'required|max:255',
+        ]);
+        $comment->update(['content' => $request->comment]);
+        return back();
+    }
 }

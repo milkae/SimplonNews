@@ -24,10 +24,15 @@ class LienController extends Controller
     			'titre' => 'required|max:60',
     			'lien' => 'required|max:100',
     	]);
-    	$request->user()->liens()->create([
+    	$lien = $request->user()->liens()->create([
         	'titre' => $request->titre,
         	'lien' => $request->lien,
     	]);
+        if($request->tags) {
+            foreach ($request->tags as $tag) {   
+                $lien->tags()->attach($tag);
+            }
+        }
         $request->user()->increment('karma');
         return redirect('/');
     }

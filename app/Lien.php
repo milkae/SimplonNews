@@ -19,7 +19,13 @@ class Lien extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function karmas() {
-    	return $this->hasMany(Karma::class);
+    public function likes()
+    {
+        return $this->morphMany('App\Like', 'likeable');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
     }
 }
