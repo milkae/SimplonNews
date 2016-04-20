@@ -21,4 +21,9 @@ class Comment extends Model
     public function children() {
     	return $this->hasMany('App\Comment', 'comment_id');
     }
+
+    public function likes()
+    {
+        return $this->morphMany('App\Like', 'likeable');
+    }
 }
