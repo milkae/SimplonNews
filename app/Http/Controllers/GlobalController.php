@@ -44,13 +44,13 @@ class GlobalController extends Controller
 			}
 		foreach($comments as $comment){
 			foreach ($comment->likes as $like) {
-				if($comment->user == Auth::user()){
+				if($like->user == Auth::user()){
 					$comment->voted = $like->val;
 				}
 			}
 			foreach($comment->children as $comment){
 				foreach ($comment->likes as $like) {
-					if($comment->user == Auth::user()){
+					if($like->user == Auth::user()){
 						$comment->voted = $like->val;
 					}
 				}
