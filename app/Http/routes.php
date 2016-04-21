@@ -39,14 +39,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/poster', 'GlobalController@getPoster')->name('link.form');
 	Route::get('/show/{lien}', 'GlobalController@getLink')->name('link.show');
 
-	Route::get('/profil', 'ProfilController@index')->name('own.profile');
-	Route::get('/profil/{user}', 'ProfilController@getProfile')->name('user.profile');
+	Route::get('/profil/{user}', 'ProfilController@getIndex')->name('user.profile');
 	Route::get('liste/users', 'ProfilController@getList')->name('users.list');
 
 	/*Authenticated routes */
 	Route::group(['middleware' => 'auth'], function () {
-		Route::get('/edit/profil', 'ProfilController@index')->name('own.profile.edit');
-		Route::post('edit/profil', 'ProfilController@store')->name('own.profile.edit');
+		Route::get('/edit/profil', 'ProfilController@getEdit')->name('user.profile.edit');
+		Route::post('edit/profil', 'ProfilController@store')->name('user.profile.edit');
 
 		Route::post('/poster/store', 'LienController@store')->name('link.store');
 		Route::delete('/poster/{lien}', 'LienController@destroy')->name('link.del');

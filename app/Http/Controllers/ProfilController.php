@@ -10,19 +10,8 @@ use App\Http\Controllers\Controller;
 
 class ProfilController extends Controller
 {
-    public function __construct()
+    public function getIndex(User $user)
     {
-        $this->middleware('auth');
-    }
-
-    public function index(Request $request)
-    {
-		$user = User::where('id', $request->user()->id)->first();
-		return view('profil.profil', ['user' => $user]);
-	}
-
-	public function getProfile(){
-		$user = User::where('id', $user->id)->first();
 		return view('profil.profil', ['user' => $user]);
 	}
 
@@ -35,11 +24,16 @@ class ProfilController extends Controller
 				'employeur' => $request->employeur,
 				'github' => $request->github,
 			]);
-		return redirect('/profil');
+		return redirect('profil/' . $request->user()->id);
 	}
 
 	public function getList(){
-		$user = User::where('id', $user->id)->first();
+		$users = User::get();
+		return view('profil.liste', ['users' => $users]);
+	}
+
+	public function getEdit(Request $request){
+		$user = $request->user();
 		return view('profil.profil', ['user' => $user]);
 	}
 }

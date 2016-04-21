@@ -6,7 +6,7 @@
 			<div class="nine wide column">
 				<div class="ui container stackable segments">
 				@if(url()->current() == url('edit/profil'))
-				<form action="{{ URL::route('own.profile.edit') }}" method="POST">
+				<form action="{{ URL::route('user.profile.edit') }}" method="POST">
 				{!! csrf_field() !!}
 				@endif
 					<div class="ui horizontal container stackable segments">
@@ -17,9 +17,9 @@
 							<input type="text" name="name" value="{{$user->name}}" class="hidden">
 							@endif
 						</div>
-						@if (Auth::check() && Auth::user()->id == $user->id && url()->current() == url('/profil'))
+						@if (Auth::check() && Auth::user()->id == $user->id && url()->current() !== url('/edit/profil'))
 						<div class="ui right aligned attached segment">
-							<a href="{{ URL::route('own.profile.edit') }}"><button class="ui compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </button></a>
+							<a href="{{ URL::route('user.profile.edit') }}"><button class="ui compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </button></a>
 						</div>
 						@endif
 						@if(url()->current() == url('edit/profil'))

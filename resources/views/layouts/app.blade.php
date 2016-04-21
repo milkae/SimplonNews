@@ -23,7 +23,7 @@
                     {{ Auth::user()->name }} 
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a class="item" href="{{ URL::route('own.profile') }}" data-text="profil">Profil</a>
+                        <a class="item" href="{{ URL::route('user.profile', [Auth::user()->id]) }}" data-text="profil">Profil</a>
                         <a class="item" href="{{ url('/logout') }}" data-text="logout">Logout</a>
                     </div>
                 </div>
