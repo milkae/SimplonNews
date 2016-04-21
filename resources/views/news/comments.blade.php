@@ -31,7 +31,7 @@
             <div class="field">
               <textarea name="comment"></textarea>
             </div>
-            <button class="ui primary submit labeled icon button"><i class="icon edit"></i> Commenter </button>
+            <button class="ui primary submit labeled icon button"><i class="icon send"></i> Commenter </button>
         </form>
     @endif
     @if (count($comments) > 0)

@@ -27,10 +27,13 @@ class CommentController extends Controller
 
     public function destroy(Request $request, Comment $comment)
 	{
-	    if (Auth::user()->id === $comment->user->id) {
-            $id = $comment->lien_id;
-		    $comment->delete();
-            $request->user()->decrement('karma');
+	    if (Auth::user()->hasRole('admin')) {
+            foreach($comment->children as $comment) {
+    		    $comment->delete();
+                $comment->user()->decrement('karma');
+            }
+            $comment->delete();
+            $comment->user()->decrement('karma');
 		    return back();
         } else {
             return abort(403);

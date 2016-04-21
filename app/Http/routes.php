@@ -2,6 +2,7 @@
 use App\Lien;
 use App\User;
 use App\Comment;
+use App\Role;
 use App\Tag;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['web']], function () {
 
 		Route::post('/comment', 'CommentController@store')->name('comment.store');
 		Route::put('/comment/{comment}', 'CommentController@edit')->name('comment.edit');
+		Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.del')->middleware('role:admin');
 
 		/* Likes */
 		Route::post('upLink/{lien}', 'LikeController@upVoteLien')->name('link.vote.up');
@@ -61,5 +63,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('downComment/{comment}', 'LikeController@downVoteComment')->name('comment.vote.down');
 		Route::post('delCommentVote/{comment}', 'LikeController@delVoteComment')->name('comment.vote.del');
 
+		Route::get('/admin', 'AdminController@getIndex')->name('admin.panel')->middleware('role:admin');
+		Route::post('/admin/set/role/{user}/{role}', 'AdminController@setRole')->name('set.role')->middleware('role:admin');
+		Route::post('/admin/remove/role/{user}/{role}', 'AdminController@removeRole')->name('remove.role')->middleware('role:admin');
 	});
 });

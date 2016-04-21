@@ -32,9 +32,17 @@ class LienController extends Controller
         return redirect('/');
     }
 
-    public function destroy(Request $request, User $user, Lien $lien)
+    public function destroy(Lien $lien)
     {
-        if (Auth::user()->id === $lien->user->id) {
+        if (Auth::user()->id === $lien->user->id || Auth::user()->hasRole('admin')) {
+            foreach($lien->comments as $comment){
+                foreach($comment->children as $comment) {
+                    $comment->delete();
+                    $comment->user()->decrement('karma');
+                }
+                $comment->delete();
+                $comment->user()->decrement('karma');
+            }
             $lien->delete();
             $lien->user()->decrement('karma');
 		    return redirect('/');

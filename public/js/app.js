@@ -5,12 +5,10 @@ $(function(){
 		e.preventDefault();
 		$(this).next('.hidden').show();
 	});
-	$('a.reply').click(function(e){
+	$('.commentAction').click(function(e){
 		e.preventDefault();
-		$(this).parent().children('.reply.hidden').toggle();
-	});
-	$('a.edit').click(function(e){
-		e.preventDefault();
-		$(this).parent().children('.edit.hidden').toggle();
+		var form = $(this).attr('act');
+		$(this).parent().parent().children('.reply.form:not(' + form + ')').hide();
+		$(this).parent().parent().children(form).toggle();
 	});
 });

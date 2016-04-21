@@ -6,11 +6,32 @@
         <div class="ui relaxed divided list">
         @foreach ($news as $new)
             <div class="item">
-                <div class="content">
+            <div class="ui left floated">
+            @if($new->voted)
+                <form class="" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
+                    {!! csrf_field() !!}
+                    @if($new->voted == 1)
+                        <button class="ui basic mini compact green button"><i class="plus icon"></i></button>
+                    @else
+                        <button class="ui basic mini compact red button"><i class="minus icon"></i></button>
+                    @endif
+                </form>
+            @else
+                <form class="" action="{{ URL::route('link.vote.up', [$new->id]) }}" method="POST">
+                    {!! csrf_field() !!}
+                    <button class="ui basic mini compact button"><i class="plus icon"></i></button>
+                </form>
+                <form class="" action="{{ URL::route('link.vote.down', [$new->id]) }}" method="POST">
+                    {!! csrf_field() !!}
+                    <button class="ui basic mini compact button"><i class="minus icon"></i></button>
+                </form>
+            @endif
+            </div>
+                <div class="row content">
                 <div class="ui header">
                     <a href="{{ $new->lien }}">{{ $new->titre }}</a>
                     <!-- Del pour le posteur -->
-                    @if (Auth::check() && Auth::user()->id == $new->user->id)
+                    @if (Auth::check() && (Auth::user()->id == $new->user->id || Auth::user()->hasRole('admin')))
                         <form class="inlineForm right floated" action="{{ URL::route('link.del', [$new->id]) }}" method="POST">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
@@ -19,27 +40,8 @@
                     @endif
                     </div>
                     <div class="description">
-                        <i class="empty star icon"></i> {{ $new->likes->sum('val') }}
+                        {{ $new->likes->sum('val') }} <i class="empty star icon"></i>
                         <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
-                        @if($new->voted)
-                            <form class="inlineForm" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
-                                {!! csrf_field() !!}
-                                @if($new->voted == 1)
-                                    <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
-                                @else
-                                    <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
-                                @endif
-                            </form>
-                        @else
-                            <form class="inlineForm" action="{{ URL::route('link.vote.up', [$new->id]) }}" method="POST">
-                                {!! csrf_field() !!}
-                                <button class="ui basic mini compact button">+</button>
-                            </form>
-                            <form class="inlineForm" action="{{ URL::route('link.vote.down', [$new->id]) }}" method="POST">
-                                {!! csrf_field() !!}
-                                <button class="ui basic mini compact button">-</button>
-                            </form>
-                        @endif
                         <a href="{{ URL::route('link.show', [$new->id]) }}">{{ count($new->comments) }} commentaire{{ count($new->comments) == 1 ? '' : 's'}}</a>
                         | {{$new->user->name}} {{$new->created_at->format('d/m/y à h:i')}}
                         <div class="right floated">

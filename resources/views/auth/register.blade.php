@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <br>
-                    <button class="ui fluid large inverted pink submit button">Login</button>
+                    <button class="ui fluid large inverted pink submit button">Sign in</button>
                     <div class="ui message">
                         <a href="{{url('/auth/github')}}">Se connecter avec Github</a>
                     </div>

@@ -18,7 +18,10 @@
                 @if (Auth::guest())
                 <a href="{{ url('/login') }}" class="item">Login</a>
                 <a href="{{ url('/register') }}" class="item">Sign Up</a>
-                @else  
+                @else
+                    @if(Auth::user()->hasRole('admin'))
+                        <a href="{{ url('/admin') }}" class="item">Admin Panel</a>
+                    @endif  
                 <div class="ui dropdown item">                       
                     {{ Auth::user()->name }} 
                     <i class="dropdown icon"></i>

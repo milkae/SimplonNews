@@ -4,10 +4,14 @@ namespace App;
 
 use App\Lien;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use SoftDeletes;
+    
+    protected $dates = ['deleted_at'];
     protected $fillable = ['content', 'lien_id', 'comment_id'];
 
     public function user() {
