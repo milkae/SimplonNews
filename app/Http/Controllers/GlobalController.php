@@ -48,6 +48,13 @@ class GlobalController extends Controller
 					$comment->voted = $like->val;
 				}
 			}
+			foreach($comment->children as $comment){
+				foreach ($comment->likes as $like) {
+					if($comment->user == Auth::user()){
+						$comment->voted = $like->val;
+					}
+				}
+			}
 		}
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 	}
