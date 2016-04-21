@@ -36,27 +36,26 @@ class GlobalController extends Controller
     }
 
     public function getLink(Lien $lien) {
-    $comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
-    	foreach ($lien->likes as $like) {
-				if($like->user == Auth::user()){
-					$lien->voted = $like->val;
-				}
-			}
+    	$comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
+    	$lien = $this->voted($lien);
 		foreach($comments as $comment){
-			foreach ($comment->likes as $like) {
-				if($like->user == Auth::user()){
-					$comment->voted = $like->val;
-				}
-			}
-			foreach($comment->children as $comment){
-				foreach ($comment->likes as $like) {
-					if($like->user == Auth::user()){
-						$comment->voted = $like->val;
-					}
-				}
-			}
+			$comment = $this->voted($comment);
 		}
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
+	}
+
+	public function voted($lienOrComment) {
+		foreach ($lienOrComment->likes as $like) {
+			if($like->user == Auth::user()){
+				$lienOrComment->voted = $like->val;
+			}
+		}
+		if($lienOrComment->children){
+			foreach($lienOrComment->children as $lienOrComment){
+				$lienOrComment = $this->voted($lienOrComment);
+			}
+		}
+		return $lienOrComment;
 	}
 
 
