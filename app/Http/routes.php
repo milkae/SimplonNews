@@ -30,74 +30,37 @@ use Illuminate\Support\Facades\Input;
 
 Route::group(['middleware' => ['web']], function () {
 	Route::auth();
-
-	// Route::get('/', function () {
-	//     return view('welcome');
-	// });
-
-	Route::get('/home', function () {
-	    return view('home');
-	});
-
-	Route::get('/profil/{user}', function(User $user){
-		$user = User::where('id', $user->id)->first();
-		return view('profil.profil', ['user' => $user]);
-	});
-
-	Route::get('/', function() {
-		$liens = Lien::paginate(10)->sortByDesc(function($val, $key){
-			return $val->likes->sum('val');
-		});
-		foreach ($liens as $lien) {
-			foreach ($lien->likes as $like) {
-				if($like->user == Auth::user()){
-					$lien->voted = $like->val;
-				}
-			}
-		}
-		return view('news.liste', ['news' => $liens]);
-	});
-
-	Route::get('liste/users', function() {
-		$users = User::get();
-		return view('profil.liste', ['users' => $users]);
-	});
-
-	Route::get('/comments/{lien}', function(Lien $lien) {
-		$comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
-		foreach($comments as $comment){
-			foreach ($comment->likes as $like) {
-				if($comment->user == Auth::user()){
-					$comment->voted = $like->val;
-				}
-			}
-		}
-		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
-	});
-
-	Route::get('/poster', function() {
-		$tags = Tag::all();
-		return view('news.ajout', ['tags' => $tags]);
-	});
-
-	Route::get('/profil', 'ProfilController@index');
-	Route::get('/edit/profil', 'ProfilController@index');
-	Route::post('edit/profil', 'ProfilController@store');
-
-	Route::post('/poster/store', 'LienController@store');
-	Route::delete('/poster/{lien}', 'LienController@destroy');
-
-	Route::post('/comment', 'CommentController@store');
-	Route::put('/comment/{comment}', 'CommentController@edit');
-
+	/* Auth GitHub */
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
 
-	Route::post('upLink/{lien}', 'LikeController@upVoteLien');
-	Route::post('downLink/{lien}', 'LikeController@downVoteLien');
-	Route::post('delLinkVote/{lien}', 'LikeController@delVoteLien');
+	Route::get('/', 'GlobalController@getIndex');
 
-	Route::post('upComment/{comment}', 'LikeController@upVoteComment');
-	Route::post('downComment/{comment}', 'LikeController@downVoteComment');
-	Route::post('delCommentVote/{comment}', 'LikeController@delVoteComment');
+	Route::get('/poster', 'GlobalController@getPoster')->name('link.form');
+	Route::get('/show/{lien}', 'GlobalController@getLink')->name('link.show');
+
+	Route::get('/profil', 'ProfilController@index')->name('own.profile');
+	Route::get('/profil/{user}', 'ProfilController@getProfile')->name('user.profile');
+	Route::get('liste/users', 'ProfilController@getList')->name('users.list');
+
+	/*Authenticated routes */
+	Route::group(['middleware' => 'auth'], function () {
+		Route::get('/edit/profil', 'ProfilController@index')->name('own.profile.edit');
+		Route::post('edit/profil', 'ProfilController@store')->name('own.profile.edit');
+
+		Route::post('/poster/store', 'LienController@store')->name('link.store');
+		Route::delete('/poster/{lien}', 'LienController@destroy')->name('link.del');
+
+		Route::post('/comment', 'CommentController@store')->name('comment.store');
+		Route::put('/comment/{comment}', 'CommentController@edit')->name('comment.edit');
+
+		/* Likes */
+		Route::post('upLink/{lien}', 'LikeController@upVoteLien')->name('link.vote.up');
+		Route::post('downLink/{lien}', 'LikeController@downVoteLien')->name('link.vote.down');
+		Route::post('delLinkVote/{lien}', 'LikeController@delVoteLien')->name('link.vote.del');
+		Route::post('upComment/{comment}', 'LikeController@upVoteComment')->name('comment.vote.up');
+		Route::post('downComment/{comment}', 'LikeController@downVoteComment')->name('comment.vote.down');
+		Route::post('delCommentVote/{comment}', 'LikeController@delVoteComment')->name('comment.vote.del');
+
+	});
 });

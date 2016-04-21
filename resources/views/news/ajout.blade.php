@@ -2,7 +2,7 @@
 
 @section('content')
         @include('common.errors')
-        <form class="ui form" action="{{ url('poster/store') }}" method="POST">
+        <form class="ui form" action="{{ URL::route('link.store') }}" method="POST">
             {!! csrf_field() !!}
             <div class="field">
                 <label for="news-titre">Titre</label>

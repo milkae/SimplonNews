@@ -4,7 +4,7 @@
     @if (count($users) > 0)
 		<h3>Liste des Utilisateurs</h3>
 		@foreach($users as $user)
-		<a href="{{ url('/profil/' . $user->id) }}">{{ $user->name }}</a>
+		<a href="{{ URL::route('user.profile', [$user->id]) }}">{{ $user->name }}</a>
 		@endforeach
     @endif
 @endsection

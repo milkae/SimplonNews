@@ -21,6 +21,11 @@ class ProfilController extends Controller
 		return view('profil.profil', ['user' => $user]);
 	}
 
+	public function getProfile(){
+		$user = User::where('id', $user->id)->first();
+		return view('profil.profil', ['user' => $user]);
+	}
+
 	public function store(Request $request){
 		User::where('id', $request->user()->id)->update([
 				'name' => $request->name,
@@ -31,5 +36,10 @@ class ProfilController extends Controller
 				'github' => $request->github,
 			]);
 		return redirect('/profil');
+	}
+
+	public function getList(){
+		$user = User::where('id', $user->id)->first();
+		return view('profil.profil', ['user' => $user]);
 	}
 }

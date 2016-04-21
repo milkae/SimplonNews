@@ -6,7 +6,7 @@
 			<div class="nine wide column">
 				<div class="ui container stackable segments">
 				@if(url()->current() == url('edit/profil'))
-				<form action="{{ url('/edit/profil') }}" method="POST">
+				<form action="{{ URL::route('own.profile.edit') }}" method="POST">
 				{!! csrf_field() !!}
 				@endif
 					<div class="ui horizontal container stackable segments">
@@ -19,7 +19,7 @@
 						</div>
 						@if (Auth::check() && Auth::user()->id == $user->id && url()->current() == url('/profil'))
 						<div class="ui right aligned attached segment">
-							<a href="{{ url('/edit/profil') }}"><button class="ui compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </button></a>
+							<a href="{{ URL::route('own.profile.edit') }}"><button class="ui compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </button></a>
 						</div>
 						@endif
 						@if(url()->current() == url('edit/profil'))

@@ -16,10 +16,6 @@ use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function upVoteLien(Request $request, Lien $lien) {
 		$this->upVote($request->user(), $lien);
 		return back();

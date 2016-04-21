@@ -12,11 +12,6 @@ use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function store(Request $request) {
     	$this->validate($request, [
     		'comment' => 'required|max:255',

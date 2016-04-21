@@ -14,11 +14,6 @@ use App\Repositories\LienRepository;
 
 class LienController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function store(Request $request) {
     	$this->validate($request, [
     			'titre' => 'required|max:60',
