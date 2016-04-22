@@ -13,10 +13,10 @@
     </div>
     @if($order == 'top')
         <div class="ui text menu">
-          <a class="active item">Du jour</a>
-          <a class="item">De la semaine</a>
-          <a class="item">Du mois</a>
-          <a class="item">De tous les temps</a>
+          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'd']) }}" class="item">Du jour</a>
+          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'w']) }}" class="item">De la semaine</a>
+          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'm']) }}" class="item">Du mois</a>
+          <a href="{{ URL::route('index', [$page, 'order' => 'top']) }}" class="item">De tous les temps</a>
         </div>
     @endif
     @if (count($news) > 0)
@@ -25,10 +25,10 @@
             <div class="item">
             <div class="ui left floated">
                         <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
-            @if($new->voted)
+            @if($new->liked())
                 <form class="" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
                     {!! csrf_field() !!}
-                    @if($new->voted == 1)
+                    @if($new->liked() == 1)
                         <button class="ui basic mini compact green button"><i class="plus icon"></i></button>
                     @else
                         <button class="ui basic mini compact red button"><i class="minus icon"></i></button>

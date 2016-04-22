@@ -6,6 +6,7 @@ use App\User;
 use App\Lien;
 use App\Tag;
 use App\Comment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -16,32 +17,34 @@ use App\Repositories\LienRepository;
 
 class GlobalController extends Controller
 {
-    public function getIndex($page = 'all', $order = 'top'){
-    	if($page == 'all') {
-	    	if($order == 'new'){
-	    		$liens = Lien::orderBy('created_at', 'desc')->paginate(10);
-	    	} else {
-		    	$liens = Lien::paginate(10)->sortByDesc(function($val, $key){
-					return $val->likes->sum('val');
-				});
-		    }
-		} else {
-			if($order == 'new'){
-	    		$liens = Lien::where('categorie', $page)->orderBy('created_at', 'desc')->paginate(10);
-	    	} else {
-		    	$liens = Lien::where('categorie', $page)->paginate(10)->sortByDesc(function($val, $key){
-					return $val->likes->sum('val');
-				});
-		    }
+    public function getIndex($page = 'all', $order =  null){
+		
+    	
+		if($order == 'd'){
+			$liens = Lien::where('created_at', '>=', Carbon::now()->startOfDay());
+		} 
+		if($order == 'w') {
+			$liens = Lien::where('created_at', '>', Carbon::now()->startOfWeek());			
+		} 
+		if($order == 'm') {
+			$liens = Lien::where('created_at', '>=', Carbon::now()->startOfMonth());			
 		}
-		foreach ($liens as $lien) {
-			foreach ($lien->likes as $like) {
-				if($like->user == Auth::user()){
-					$lien->voted = $like->val;
-				}
+		if($page !== 'all'){
+			if(isset($liens)) {
+				$liens = $liens->where('categorie', $page);
+			} else {
+				$liens = Lien::where('categorie', $page);	
 			}
 		}
-		return view('news.liste', ['news' => $liens, 'page' => $page, 'order' => $order]);
+		if(!isset($liens)){
+			$liens = Lien::whereNotNull('id');
+		}
+
+		$sorted = $liens->get()->sortByDesc(function($val, $key){
+			return $val->likes->sum('val');
+		});
+
+		return view('news.liste', ['news' => $sorted, 'page' => $page, 'order' => $order]);
     }
 
     public function getPoster(){
@@ -51,26 +54,6 @@ class GlobalController extends Controller
 
     public function getLink(Lien $lien) {
     	$comments = Comment::where('lien_id', $lien->id)->where('comment_id', 0)->get();
-    	$lien = $this->voted($lien);
-		foreach($comments as $comment){
-			$comment = $this->voted($comment);
-		}
 		return view('news.comments', ['comments' => $comments, 'news' => $lien]);
 	}
-
-	public function voted($lienOrComment) {
-		foreach ($lienOrComment->likes as $like) {
-			if($like->user == Auth::user()){
-				$lienOrComment->voted = $like->val;
-			}
-		}
-		if($lienOrComment->children){
-			foreach($lienOrComment->children as $lienOrComment){
-				$lienOrComment = $this->voted($lienOrComment);
-			}
-		}
-		return $lienOrComment;
-	}
-
-
 }

@@ -4,6 +4,11 @@
 	<div class="mid-content" style="position: relative; top: 15%;">
 		<div class="ui center aligned container stackable grid">
 			<div class="nine wide column">
+				<div class="ui labels">
+				@foreach($user->roles as $role)
+					<div class="ui label {{$user->hasRole($role->name)?$role->color:''}}">{{ ucfirst(trans($role->name)) }}</div>
+				@endforeach
+				</div>
 				<div class="ui container stackable segments">
 				@if(url()->current() == url('edit/profil'))
 				<form action="{{ URL::route('user.profile.edit') }}" method="POST">

@@ -11,10 +11,10 @@
         </div>
         <div class="actions">
             {{ $comment->likes->sum('val') }}
-            @if($comment->voted)
+            @if($comment->liked())
                 <form class="inlineForm" action="{{ URL::route('comment.vote.del', [$comment->id]) }}" method="POST">
                     {!! csrf_field() !!}
-                    @if($comment->voted == 1)
+                    @if($comment->liked() == 1)
                         <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
                     @else
                         <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
@@ -69,4 +69,3 @@
         </div>
     @endif
 </div>
-<!--Bouton d'édition affiché seulement si l'utilisateur a les droits pour -->

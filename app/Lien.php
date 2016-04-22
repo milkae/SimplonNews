@@ -5,6 +5,7 @@ namespace App;
 use App\Karma;
 use App\User;
 use App\Comment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,5 +32,14 @@ class Lien extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag');
+    }
+
+    public function liked(){
+        foreach ($this->likes as $like) {
+            if($like->user == Auth::user()){
+                return $like->val;
+            }
+        }
+        return false;
     }
 }

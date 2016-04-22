@@ -12,7 +12,8 @@
         "wangaz/laravel-semantic-ui-css": ">=0.3",
         "league/oauth2-github": "^0.2.0",
         "adamwathan/eloquent-oauth-l5": "^0.4.2",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "nesbot/carbon": "^1.21"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

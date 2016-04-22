@@ -4,6 +4,7 @@ namespace App;
 
 use App\Lien;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,14 @@ class Comment extends Model
     public function likes()
     {
         return $this->morphMany('App\Like', 'likeable');
+    }
+
+    public function liked(){
+        foreach ($this->likes as $like) {
+            if($like->user == Auth::user()){
+                return $like->val;
+            }
+        }
+        return false;
     }
 }

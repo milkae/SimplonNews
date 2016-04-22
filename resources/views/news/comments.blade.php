@@ -3,10 +3,10 @@
 @section('content')
 <div><a href="{{ $news->lien }}">{{ $news->titre }}</a></div>
 {{$news->user->name}} | <i class="empty star icon"></i> {{ $news->likes->sum('val') }} 
-@if($news->voted)
+@if($news->liked())
     <form class="inlineForm" action="{{ URL::route('link.vote.del', [$news->id]) }}" method="POST">
         {!! csrf_field() !!}
-        @if($news->voted == 1)
+        @if($news->liked() == 1)
             <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
         @else
             <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
