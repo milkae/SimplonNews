@@ -13,7 +13,7 @@ class Lien extends Model
     use SoftDeletes;
     
     protected $dates = ['deleted_at'];
-    protected $fillable = ['titre', 'lien'];
+    protected $fillable = ['titre', 'lien', 'categorie'];
 
     public function user() {
     	return $this->belongsTo(User::class);

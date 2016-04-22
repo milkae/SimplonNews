@@ -31,8 +31,8 @@
                     </div>
                 </div>
                 @endif    
-                <a href="/poster" class="item">
-                    <button class="ui pink button">Post</button>
+                <a href="{{ URL::route('link.form') }}" class="item">
+                    <button class="ui pink button">Poster un lien</button>
                 </a>
             </div>
         </nav>

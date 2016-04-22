@@ -1,12 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ URL::route('link.form') }}">Poster un lien</a>
+    <div class="ui fluid four item menu">
+      <a href="{{ URL::route('index', ['page' => 'all']) }}" class="{{ $page == 'all'? 'active':'' }} item">Tout</a>
+      <a href="{{ URL::route('index', ['page' => 'web']) }}" class="{{ $page == 'web'? 'active':'' }} item">Culture web</a>
+      <a href="{{ URL::route('index', ['page' => 'tutos']) }}" class="{{ $page == 'tutos'? 'active':'' }} item">Tutos/Tech</a>
+      <a href="{{ URL::route('index', ['page' => 'jobs']) }}" class="{{ $page == 'jobs'? 'active':'' }} item">Jobs</a>
+    </div>
+    <div class="ui secondary pointing menu">
+      <a href="{{ URL::route('index', [$page, 'order' => 'top']) }}" class="{{ $order == 'top'? 'active':'' }} item">Top</a>
+      <a href="{{ URL::route('index', [$page, 'order' => 'new']) }}" class="{{ $order == 'new'? 'active':'' }} item">Nouveaux</a>
+    </div>
+    @if($order == 'top')
+        <div class="ui text menu">
+          <a class="active item">Du jour</a>
+          <a class="item">De la semaine</a>
+          <a class="item">Du mois</a>
+          <a class="item">De tous les temps</a>
+        </div>
+    @endif
     @if (count($news) > 0)
         <div class="ui relaxed divided list">
         @foreach ($news as $new)
             <div class="item">
             <div class="ui left floated">
+                        <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
             @if($new->voted)
                 <form class="" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
                     {!! csrf_field() !!}
@@ -41,9 +59,8 @@
                     </div>
                     <div class="description">
                         {{ $new->likes->sum('val') }} <i class="empty star icon"></i>
-                        <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
                         <a href="{{ URL::route('link.show', [$new->id]) }}">{{ count($new->comments) }} commentaire{{ count($new->comments) == 1 ? '' : 's'}}</a>
-                        | {{$new->user->name}} {{$new->created_at->format('d/m/y à h:i')}}
+                        | {{$new->user->name}} {{$new->created_at->format('d/m/y à H:i')}}
                         <div class="right floated">
                         @foreach($new->tags as $tag)
                             <div class="ui label">{{ $tag->name }}</div>

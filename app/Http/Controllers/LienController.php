@@ -17,11 +17,13 @@ class LienController extends Controller
     public function store(Request $request) {
     	$this->validate($request, [
     			'titre' => 'required|max:60',
-    			'lien' => 'required|max:100',
+                'lien' => 'required|max:100',
+    			'categorie' => 'required|max:100',
     	]);
     	$lien = $request->user()->liens()->create([
         	'titre' => $request->titre,
         	'lien' => $request->lien,
+            'categorie' => $request->categorie
     	]);
         if($request->tags) {
             foreach ($request->tags as $tag) {   

@@ -21,6 +21,27 @@
                 @endforeach
                 </select>
             </div>
+            <div class="inline fields">
+                <label for="categorie">Catégorie du lien :</label>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="categorie" value="web" checked="" tabindex="0" class="hidden">
+                    <label>Culture web</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="categorie" value="tutos" tabindex="0" class="hidden">
+                    <label>Tutos/Tech</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="categorie" value="jobs" tabindex="0" class="hidden">
+                    <label>Jobs</label>
+                  </div>
+                </div>
+            </div>
             <button class="ui button" type="submit">Ajouter une news</button>
         </form>
 @endsection

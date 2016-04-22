@@ -11,4 +11,6 @@ $(function(){
 		$(this).parent().parent().children('.reply.form:not(' + form + ')').hide();
 		$(this).parent().parent().children(form).toggle();
 	});
+
+	$('.ui.radio.checkbox').checkbox(); 
 });

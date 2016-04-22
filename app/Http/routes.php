@@ -35,7 +35,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('auth/github', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
 
-	Route::get('/', 'GlobalController@getIndex');
+	Route::get('/', function(){
+		return redirect('/news');
+	});
+
+	Route::get('/news/{page?}/{new?}', 'GlobalController@getIndex')->name('index');
 
 	Route::get('/poster', 'GlobalController@getPoster')->name('link.form');
 	Route::get('/show/{lien}', 'GlobalController@getLink')->name('link.show');

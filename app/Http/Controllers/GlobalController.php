@@ -16,10 +16,24 @@ use App\Repositories\LienRepository;
 
 class GlobalController extends Controller
 {
-    public function getIndex(){
-    	$liens = Lien::paginate(10)->sortByDesc(function($val, $key){
-			return $val->likes->sum('val');
-		});
+    public function getIndex($page = 'all', $order = 'top'){
+    	if($page == 'all') {
+	    	if($order == 'new'){
+	    		$liens = Lien::orderBy('created_at', 'desc')->paginate(10);
+	    	} else {
+		    	$liens = Lien::paginate(10)->sortByDesc(function($val, $key){
+					return $val->likes->sum('val');
+				});
+		    }
+		} else {
+			if($order == 'new'){
+	    		$liens = Lien::where('categorie', $page)->orderBy('created_at', 'desc')->paginate(10);
+	    	} else {
+		    	$liens = Lien::where('categorie', $page)->paginate(10)->sortByDesc(function($val, $key){
+					return $val->likes->sum('val');
+				});
+		    }
+		}
 		foreach ($liens as $lien) {
 			foreach ($lien->likes as $like) {
 				if($like->user == Auth::user()){
@@ -27,7 +41,7 @@ class GlobalController extends Controller
 				}
 			}
 		}
-		return view('news.liste', ['news' => $liens]);
+		return view('news.liste', ['news' => $liens, 'page' => $page, 'order' => $order]);
     }
 
     public function getPoster(){
