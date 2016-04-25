@@ -36,7 +36,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');
 
 	Route::get('/', function(){
-		return redirect('/news');
+		return redirect()->route('index');
 	});
 
 	Route::get('/news/{page?}/{order?}', 'GlobalController@getIndex')->name('index');
@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web']], function () {
 
 		Route::post('/comment', 'CommentController@store')->name('comment.store');
 		Route::put('/comment/{comment}', 'CommentController@edit')->name('comment.edit');
-		Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.del')->middleware('role:admin');
+		Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.del');
 
 		/* Likes */
 		Route::post('upLink/{lien}', 'LikeController@upVoteLien')->name('link.vote.up');

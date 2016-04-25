@@ -34,9 +34,11 @@ class CommentController extends Controller
             }
             $comment->delete();
             $comment->user()->decrement('karma');
-		    return back();
+            return back();
         } else {
-            return abort(403);
+            $comment->update(['content' => "Commentaire supprimé par l'utilisateur"]);
+            $comment->user()->decrement('karma');
+            return back();
         }
 	}
     public function edit(Request $request, Comment $comment)

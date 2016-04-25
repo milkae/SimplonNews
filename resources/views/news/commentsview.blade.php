@@ -31,12 +31,10 @@
                 </form>
             @endif
             @if(Auth::check())
-                <a class="commentAction reply active" act=".replyAct">Répondre</a>
+                <a class="commentAction reply" act=".replyAct">Répondre</a>
                 @if (Auth::user()->id == $comment->user_id || Auth::user()->hasRole('admin'))
-                    <a class="commentAction reply active" act=".editAct">Editer</a>
-                @endif
-                @if (Auth::user()->hasRole('admin'))
-                    <a class="commentAction reply active" act=".delAct">Supprimer</a>
+                    <a class="commentAction reply" act=".editAct">Editer</a>
+                    <a class="commentAction reply" act=".delAct">Supprimer</a>
                 @endif
             @endif
         </div>   
