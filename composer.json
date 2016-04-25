@@ -13,7 +13,8 @@
         "league/oauth2-github": "^0.2.0",
         "adamwathan/eloquent-oauth-l5": "^0.4.2",
         "laravel/socialite": "^2.0",
-        "nesbot/carbon": "^1.21"
+        "nesbot/carbon": "^1.21",
+        "overtrue/laravel-lang": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
