@@ -7,18 +7,13 @@
       <a href="{{ URL::route('index', ['page' => 'tutos']) }}" class="{{ $page == 'tutos'? 'active':'' }} item">Tutos/Tech</a>
       <a href="{{ URL::route('index', ['page' => 'jobs']) }}" class="{{ $page == 'jobs'? 'active':'' }} item">Jobs</a>
     </div>
-    <div class="ui secondary pointing menu">
-      <a href="{{ URL::route('index', [$page, 'order' => 'top']) }}" class="{{ $order == 'top'? 'active':'' }} item">Top</a>
-      <a href="{{ URL::route('index', [$page, 'order' => 'new']) }}" class="{{ $order == 'new'? 'active':'' }} item">Nouveaux</a>
+    <div class="ui text menu">
+        <div class="header item">Top</div>
+        <a href="{{ URL::route('index', [$page, 'order' => 'd']) }}" class="{{ $order == 'd'? 'active':'' }} item">Du jour</a>
+        <a href="{{ URL::route('index', [$page, 'order' => 'w']) }}" class="{{ $order == 'w'? 'active':'' }} item">De la semaine</a>
+        <a href="{{ URL::route('index', [$page, 'order' => 'm']) }}" class="{{ $order == 'm'? 'active':'' }} item">Du mois</a>
+        <a href="{{ URL::route('index', [$page]) }}" class="item">De tous les temps</a>
     </div>
-    @if($order == 'top')
-        <div class="ui text menu">
-          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'd']) }}" class="item">Du jour</a>
-          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'w']) }}" class="item">De la semaine</a>
-          <a href="{{ URL::route('index', [$page, 'order' => 'top', 'top' => 'm']) }}" class="item">Du mois</a>
-          <a href="{{ URL::route('index', [$page, 'order' => 'top']) }}" class="item">De tous les temps</a>
-        </div>
-    @endif
     @if (count($news) > 0)
         <div class="ui relaxed divided list">
         @foreach ($news as $new)
