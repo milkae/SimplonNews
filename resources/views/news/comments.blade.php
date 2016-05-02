@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    <title>Simplon News - {{ $news->titre }}</title>
+@endsection
 
 @section('content')
 <div><a href="{{ $news->lien }}">{{ $news->titre }}</a></div>

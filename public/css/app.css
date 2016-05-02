@@ -10,3 +10,7 @@
 .inlineForm {
 	display: inline;
 }
+
+.home-list a:visited {
+	color:grey;
+}

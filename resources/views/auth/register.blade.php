@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    <title>Simplon News - Inscription</title>
+@endsection
 
 @section('content')
 <div class="ui middle aligned center aligned grid">

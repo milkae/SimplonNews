@@ -28,7 +28,7 @@ class ProfilController extends Controller
 	}
 
 	public function getList(){
-		$users = User::get();
+		$users = User::orderBy('name', 'asc')->get();
 		return view('profil.liste', ['users' => $users]);
 	}
 

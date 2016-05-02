@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@section('title')
+    <title>Simplon News - Administration</title>
+@endsection
+
 @section('content')
 	<div class="ui secondary pointing menu">
 	  <a class="active item">Users </a>

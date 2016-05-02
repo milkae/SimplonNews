@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    <title>Simplon News - Ajouter un lien</title>
+@endsection
 
 @section('content')
         @include('common.errors')

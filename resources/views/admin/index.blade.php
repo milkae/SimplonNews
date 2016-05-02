@@ -5,7 +5,7 @@
 		<div class="ui middle aligned celled list">
 		@foreach($users as $user)
 		  <div class="item">
-		    <img class="ui avatar image" src="{{$user->avatar?$user->avatar:'http://lorempixel.com/600/600/cats'}}">
+		    <img class="ui avatar image" src="{{$user->avatar?$user->avatar:'http://lorempixel.com/600/600/cats'}}" alt="{{ $user->name }}">
 		    <div class="content">
 		      <a class="header" href="{{ URL::route('user.profile', [$user->id]) }}">{{ $user->name }}</a>
 		    </div>
@@ -19,5 +19,6 @@
 		    </div>
 		  </div>
 		@endforeach
+		</div>
     @endif
 @endsection

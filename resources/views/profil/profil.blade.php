@@ -1,6 +1,9 @@
 @extends('layouts.app')
+@section('title')
+    <title>Simplon News - {{ $user->name }}</title>
+@endsection
+
 @section('content')
-<!-- employeur travail github photo -->
 <div class="ui center aligned container stackable grid">
 	<div class="nine wide column">
 		<div class="ui labels">
@@ -19,7 +22,7 @@
 					<button class="ui right floated compact icon pink inverted button show-next"><i class="setting icon"></i></button>
 					@endif
 					<div class="header dividing">
-						<p>{{ $user->name }}</p>
+						<h3>{{ $user->name }}</h3>
 						<div class="ui field hidden">
 							<input type="text" name="name" value="{{$user->name}}" class="">
 						</div>
@@ -31,7 +34,7 @@
 						<i class="icon diamond big pink"></i>
 						@endif
 				@if (Auth::check() && Auth::user()->id == $user->id && url()->current() !== url('/edit/profil'))
-					<a href="{{ URL::route('user.profile.edit') }}"><button class="ui right floated compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </button></a>
+					<a href="{{ URL::route('user.profile.edit') }}" class="ui right floated compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </a>
 				@endif
 				</div>
 				@if(url()->current() == url('edit/profil'))
@@ -43,7 +46,7 @@
 			<div class="ui segment">
 				<div class="ui container stackable grid">
 					<div class="eight wide column">
-						<img src="{{$user->avatar?$user->avatar:'http://lorempixel.com/600/600/cats'}}" alt="Image de Profil" class="ui large rounded image">
+						<img src="{{$user->avatar?$user->avatar:'http://lorempixel.com/600/600/cats'}}" alt="{{ $user->name }}" class="ui large rounded image">
 					</div>
 					<div class="eight wide left aligned verry padded column">
 						<div class="ui list">
