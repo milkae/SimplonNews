@@ -16,9 +16,9 @@ class LienController extends Controller
 {
     public function store(Request $request) {
     	$this->validate($request, [
-    			'titre' => 'required|max:60',
-                'lien' => 'required|max:100',
-    			'categorie' => 'required|max:100',
+    			'titre' => 'required|max:150',
+                'lien' => 'required|url',
+    			'categorie' => 'required ',
     	]);
     	$lien = $request->user()->liens()->create([
         	'titre' => $request->titre,
