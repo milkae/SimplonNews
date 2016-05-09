@@ -34,6 +34,6 @@ class ProfilController extends Controller
 
 	public function getEdit(Request $request){
 		$user = $request->user();
-		return view('profil.profil', ['user' => $user]);
+		return view('profil.edit', ['user' => $user]);
 	}
 }

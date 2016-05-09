@@ -11,11 +11,15 @@
 			<div class="ui label {{$user->hasRole($role->name)?$role->color:''}}">{{ ucfirst(trans($role->name)) }}</div>
 		@endforeach
 		</div>
+		<form class="ui form" action="{{ URL::route('user.profile.edit') }}" method="POST">
+		{!! csrf_field() !!}
 		<div class="ui container stackable segments">
 			<div class="ui horizontal container stackable segments">
 				<div class="ui left aligned attached padded segment">
 					<div class="header dividing">
-						<h3>{{ $user->name }}</h3>
+						<div class="ui field">
+							<input type="text" name="name" value="{{$user->name}}" class="">
+						</div>
 					</div>
 				</div>
 				<div class="ui left aligned attached segment">
@@ -24,11 +28,9 @@
 						<i class="icon diamond big pink"></i>
 						@endif
 				</div>
-				@if (Auth::check() && Auth::user()->id == $user->id && url()->current() !== url('/edit/profil'))
 				<div class="ui left aligned attached segment">
-					<a href="{{ URL::route('user.profile.edit') }}" class="ui right floated compact labeled icon pink inverted button"><i class="setting icon"></i> Edit </a>
+					<input type="submit" value="Enregistrer" class="ui compact labeled icon pink inverted button">
 				</div>
-				@endif
 			</div>
 			<div class="ui segment">
 				<div class="ui container stackable grid">
@@ -40,7 +42,9 @@
 							<div class="item">
 								<div class="content">
 									<div class="header">Nom</div>
-									{{$user->nom}}
+									<div class="ui field">
+										<input type="text" name="nom" value="{{$user->nom}}" class="">
+									</div>
 								</div>
 							</div>
 							<div class="ui divider"></div>
@@ -48,7 +52,9 @@
 							<div class="item">
 								<div class="content">
 									<div class="header">Prénom</div>
-									{{$user->prenom}}
+									<div class="ui field">
+										<input type="text" name="prenom" value="{{$user->prenom}}" class="">
+									</div>
 								</div>
 							</div>
 							<div class="ui divider"></div>
@@ -56,7 +62,9 @@
 							<div class="item">
 								<div class="content">
 									<div class="header">Profession</div>
-									{{$user->job}}
+									<div class="ui field">
+										<input type="text" name="job" value="{{$user->job}}" class="">
+									</div>
 								</div>
 							</div>
 							<div class="ui divider"></div>
@@ -64,7 +72,9 @@
 							<div class="item">
 								<div class="content">
 									<div class="header">Employeur</div>
-									{{$user->employeur}}
+									<div class="ui field">
+										<input type="text" name="employeur" value="{{$user->employeur}}" class="">
+									</div>
 								</div>
 							</div>
 							<div class="ui divider"></div>
@@ -76,7 +86,9 @@
 										<button class="ui circular github icon button">
 											<i class="github icon"></i>
 										</button>
-										<a href="{{$user->github}}">{{ $user->name }}</a>
+									</div>
+									<div class="ui field">
+										<input type="text" name="github" value="{{$user->github}}" class="">
 									</div>
 								</div>
 							</div>
@@ -85,6 +97,7 @@
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 </div>
 @endsection

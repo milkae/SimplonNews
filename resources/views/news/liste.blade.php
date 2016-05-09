@@ -28,28 +28,28 @@
                     {!! csrf_field() !!}
                     @if($new->liked() == 1)
                     <div>
-                        <button class="ui basic mini compact green button"><i class="plus icon"></i></button>
+                        <button class="ui basic mini compact green button"><i class="caret up icon"></i></button>
                     </div>
                     <div>
-                        <button class="ui basic mini compact button"><i class="minus icon"></i></button>
+                        <button class="ui basic mini compact button"><i class="caret down icon"></i></button>
                     </div>
                     @elseif($new->liked() == -1)
                     <div>
-                        <button class="ui basic mini compact button"><i class="plus icon"></i></button>
+                        <button class="ui basic mini compact button"><i class="caret up icon"></i></button>
                     </div>
                     <div>    
-                        <button class="ui basic mini compact red button"><i class="minus icon"></i></button>
+                        <button class="ui basic mini compact red button"><i class="caret down icon"></i></button>
                     </div>
                     @endif
                 </form>
             @else
                 <form class="" action="{{ URL::route('link.vote.up', [$new->id]) }}" method="POST">
                     {!! csrf_field() !!}
-                    <button class="ui basic mini compact button"><i class="plus icon"></i></button>
+                    <button class="ui basic mini compact button"><i class="caret up icon"></i></button>
                 </form>
                 <form class="" action="{{ URL::route('link.vote.down', [$new->id]) }}" method="POST">
                     {!! csrf_field() !!}
-                    <button class="ui basic mini compact button"><i class="minus icon"></i></button>
+                    <button class="ui basic mini compact button"><i class="caret down icon"></i></button>
                 </form>
             @endif
             </div>
