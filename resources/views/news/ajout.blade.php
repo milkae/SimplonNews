@@ -45,6 +45,27 @@
                   </div>
                 </div>
             </div>
+            <div class="inline fields">
+                <label for="fruit">Langue du lien :</label>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="langue" value="fr" checked="" tabindex="0" class="hidden">
+                    <label>Français</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="langue" value="gb" tabindex="0" class="hidden">
+                    <label>Anglais</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="langue" value="misc" tabindex="0" class="hidden">
+                    <label>Autre</label>
+                  </div>
+                </div>
+            </div>
             <button class="ui button" type="submit">Ajouter une news</button>
         </form>
 @endsection

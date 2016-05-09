@@ -55,7 +55,12 @@
             </div>
                 <div class="row content">
                 <div class="ui header">
-                    <a href="{{ $new->lien }}" rel="nofollow">{{ $new->titre }}</a>
+                    <a href="{{ $new->lien }}" rel="nofollow">
+                        @if($new->langue !== 'misc')
+                            <i class="{{ $new->langue }} flag"></i>
+                        @endif
+                        {{ $new->titre }} 
+                    </a>
                     @if (Auth::check() && (Auth::user()->id == $new->user->id || Auth::user()->hasRole('admin')))
                         <form class="inlineForm right floated" action="{{ URL::route('link.del', [$new->id]) }}" method="POST">
                             {!! csrf_field() !!}

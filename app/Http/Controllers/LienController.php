@@ -19,11 +19,13 @@ class LienController extends Controller
     			'titre' => 'required|max:150',
                 'lien' => 'required|url',
     			'categorie' => 'required ',
+                'langue' => 'required'
     	]);
     	$lien = $request->user()->liens()->create([
         	'titre' => $request->titre,
         	'lien' => $request->lien,
-            'categorie' => $request->categorie
+            'categorie' => $request->categorie,
+            'langue' => $request->langue
     	]);
         if($request->tags) {
             foreach ($request->tags as $tag) {   
