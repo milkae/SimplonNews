@@ -82,11 +82,6 @@
 							<div class="item">
 								<div class="content">
 									<div class="header">Github</div>
-									<div class="description">
-										<button class="ui circular github icon button">
-											<i class="github icon"></i>
-										</button>
-									</div>
 									<div class="ui field">
 										<input type="text" name="github" value="{{$user->github}}" class="">
 									</div>
