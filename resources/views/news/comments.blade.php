@@ -10,9 +10,11 @@
     <form class="inlineForm" action="{{ URL::route('link.vote.del', [$news->id]) }}" method="POST">
         {!! csrf_field() !!}
         @if($news->liked() == 1)
-            <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
+            <button class="ui basic mini compact green button">+</i></button>
+            <button class="ui basic mini compact button">-</i></button>
         @else
-            <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
+            <button class="ui basic mini compact button">+</button>
+            <button class="ui basic mini compact red button">-</button>
         @endif
     </form>
 @else
