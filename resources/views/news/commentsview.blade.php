@@ -1,5 +1,5 @@
 
-<div class="comment">
+<div class="comment" id="{{$comment->id}}">
     <a class="avatar"><img src="{{$comment->user->avatar?$comment->user->avatar:'http://lorempixel.com/600/600/cats'}}" /></a>
     <div class="content">
         <a href="{{ URL::route('user.profile', [$comment->user->id]) }}" class="author">{{$comment->user->name}}</a>

@@ -85,6 +85,31 @@
 				</div>
 			</div>
 		</div>
+		@if(count($user->liens) > 0)
+		<div class="ui left aligned container segment">
+			<h4 class="ui header">Liens postés</h4>
+			<ul class="ui bulleted list">
+				@foreach($user->liens as $lien)
+					<a class="item" href="{{ URL::route('link.show', [$lien->id]) }}">{{ $lien->titre }}</a>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+		@if(count($user->comments) > 0)
+		<div class="ui left aligned container segment">
+			<h4 class="ui header">Commentaires</h4>
+			<ul class="ui bulleted list">
+				@foreach($user->comments as $comment)
+					<div class="item">
+						<div class="content">
+							<a class="header" href="{{ URL::route('link.show', [$comment->lien->id]) }}">{{ $comment->lien->titre }}</a>
+							<a class="description" href="{{ URL::route('link.show', [$comment->lien->id]) }}#{{$comment->id}}">{{ str_limit($comment->content, 100) }}</a>
+						</div>
+					</div>
+				@endforeach
+			</ul>
+		</div>
+		@endif
 	</div>
 </div>
 @endsection
