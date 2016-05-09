@@ -15,9 +15,11 @@
                 <form class="inlineForm" action="{{ URL::route('comment.vote.del', [$comment->id]) }}" method="POST">
                     {!! csrf_field() !!}
                     @if($comment->liked() == 1)
-                        <button class="ui basic mini compact green button"><i class="checkmark icon"></i></button>
+                        <button class="ui basic mini compact green button">+</button>
+                        <button class="ui basic mini compact button">-</button>
                     @else
-                        <button class="ui basic mini compact red button"><i class="remove icon"></i></button>
+                        <button class="ui basic mini compact button">+</button>
+                        <button class="ui basic mini compact red button">-</button>
                     @endif
                 </form>
             @else

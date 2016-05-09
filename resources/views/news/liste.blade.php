@@ -27,9 +27,19 @@
                 <form class="" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
                     {!! csrf_field() !!}
                     @if($new->liked() == 1)
+                    <div>
                         <button class="ui basic mini compact green button"><i class="plus icon"></i></button>
-                    @else
+                    </div>
+                    <div>
+                        <button class="ui basic mini compact button"><i class="minus icon"></i></button>
+                    </div>
+                    @elseif($new->liked() == -1)
+                    <div>
+                        <button class="ui basic mini compact button"><i class="plus icon"></i></button>
+                    </div>
+                    <div>    
                         <button class="ui basic mini compact red button"><i class="minus icon"></i></button>
+                    </div>
                     @endif
                 </form>
             @else
