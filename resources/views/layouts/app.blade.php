@@ -9,35 +9,33 @@
     <link rel="stylesheet" href=" {{url('css/app.css')}} ">
 </head>
 <body id="app-layout">
-    <div class="ui container grid">
-        <nav class="ui fixed menu">
-            <a href="{{ url('/') }}" class="item"><h1 class="header">SimploNews</h1></a>
-            <div class="right menu">
-                <a href="{{ url('/liste/users') }}" class="item">Utilisateurs</a>
-                @if (Auth::guest())
-                <a href="{{ url('/login') }}" class="item">Connexion</a>
-                @else
-                    @if(Auth::user()->hasRole('admin'))
-                        <a href="{{ url('/admin') }}" class="item">Administration</a>
-                    @endif  
-                <div class="ui dropdown item">                       
-                    {{ Auth::user()->name }} 
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="{{ URL::route('user.profile', [Auth::user()->id]) }}" data-text="profil">Profil</a>
-                        <a class="item" href="{{ url('/logout') }}" data-text="logout">Déconnexion</a>
-                    </div>
-                </div>
-                @endif
-                <div class="item">    
-                <a href="{{ URL::route('link.form') }}" class="ui pink button ">Poster un lien</a>
+    <nav class="ui fixed menu">
+        <a href="{{ url('/') }}" class="item"><h1 class="header">SimploNews</h1></a>
+        <div class="right menu">
+            <a href="{{ url('/liste/users') }}" class="item">Utilisateurs</a>
+            @if (Auth::guest())
+            <a href="{{ url('/login') }}" class="item">Connexion</a>
+            @else
+                @if(Auth::user()->hasRole('admin'))
+                    <a href="{{ url('/admin') }}" class="item">Administration</a>
+                @endif  
+            <div class="ui dropdown item">                       
+                {{ Auth::user()->name }} 
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="{{ URL::route('user.profile', [Auth::user()->id]) }}" data-text="profil">Profil</a>
+                    <a class="item" href="{{ url('/logout') }}" data-text="logout">Déconnexion</a>
                 </div>
             </div>
-        </nav>
+            @endif
+            <div class="item">    
+            <a href="{{ URL::route('link.form') }}" class="ui pink button ">Poster un lien</a>
+            </div>
+        </div>
+    </nav>
         <section class="ui main container">
         @yield('content')
         </section>
-    </div>
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="{{url('assets/semantic-ui/semantic.min.js') }}"></script>
