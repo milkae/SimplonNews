@@ -5,7 +5,11 @@
 
 @section('content')
         @include('common.errors')
+        @if(Auth::check)
         <form class="ui form" action="{{ URL::route('link.store') }}" method="POST">
+        @else
+        <form class="ui form" action="{{ URL('/guestPost') }}" method="POST">
+        @endif
             {!! csrf_field() !!}
             <div class="field">
                 <label for="news-titre">Titre</label>

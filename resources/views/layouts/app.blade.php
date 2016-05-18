@@ -29,9 +29,11 @@
                     </div>
                 </div>
                 @endif
+                @if(Auth::check())
                 <div class="item">    
                 <a href="{{ URL::route('link.form') }}" class="ui pink button ">Poster un lien</a>
                 </div>
+                @endif
             </div>
         </nav>
         <section class="ui main container">

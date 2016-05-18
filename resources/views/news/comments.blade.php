@@ -4,8 +4,8 @@
 @endsection
 
 @section('content')
-<div><a href="{{ $news->lien }}">{{ $news->titre }}</a></div>
-{{$news->user->name}} | <i class="empty star icon"></i> {{ $news->likes->sum('val') }} 
+<h1><a href="{{ $news->lien }}">{{ $news->titre }}</a></h1>
+{{$news->user->name}} | {{ $news->likes->sum('val') }}<i class="empty star icon"></i>  
 @if($news->liked())
     <form class="inlineForm" action="{{ URL::route('link.vote.del', [$news->id]) }}" method="POST">
         {!! csrf_field() !!}
@@ -28,6 +28,7 @@
     </form>
 @endif
 <div class="ui threaded comments">
+    @if(Auth::check())
     <form class="ui reply form" action="{{ URL::route('comment.store') }}" method="POST">
         {!! csrf_field() !!}
         <input type="hidden" name="news" value="{{ $news->id }}">
@@ -37,6 +38,7 @@
         </div>
         <button class="ui primary submit labeled icon button"><i class="icon send"></i> Commenter </button>
     </form>
+    @endif
     @if (count($comments) > 0)
         <h5 class="ui dividing header">Commentaires</h5>
         @each('news.commentsview', $comments, 'comment')
