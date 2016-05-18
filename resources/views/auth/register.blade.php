@@ -13,7 +13,7 @@
                 <div class="field {{ $errors->has('name') ? 'error' : '' }}">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="name" placeholder="Nom">
+                        <input type="text" name="name" placeholder="Nom" value="{{ old('name') }}">
                     </div>
                     @if ($errors->has('name'))
                     <div class="ui negative message">
@@ -24,7 +24,7 @@
                 <div class="field {{ $errors->has('email') ? 'error' : '' }}">
                     <div class="ui left icon input">
                         <i class="at icon"></i>
-                        <input type="text" name="email" placeholder="E-mail address">
+                        <input type="text" name="email" placeholder="E-mail address" value="{{ old('email') }}">
                     </div>
                     @if ($errors->has('email'))
                     <div class="ui negative message">
