@@ -26,7 +26,6 @@
                     <a class="item" href="{{ URL::route('user.profile', [Auth::user()->id]) }}" data-text="profil">Profil</a>
                     <a class="item" href="{{ url('/logout') }}" data-text="logout">Déconnexion</a>
                 </div>
-                @endif
             </div>
             <div class="item">    
             <a href="{{ URL::route('link.form') }}" class="ui pink button ">Poster un lien</a>
