@@ -22,36 +22,14 @@
         @foreach ($news as $new)
             <div class="item">
             <div class="ui left floated">
-                        <!-- Change l'icone et l'action si un vote de l'utilisateur sur le lien existe -->
-            @if($new->liked())
-                <form class="" action="{{ URL::route('link.vote.del', [$new->id]) }}" method="POST">
+                <form class="" action="{{ URL::route('handleVote', [ 'table' => 'liens', 'item' => $new->id, 'voteType' => 'upvote']) }}" method="POST">
                     {!! csrf_field() !!}
-                    @if($new->liked() == 1)
-                    <div>
-                        <button class="ui basic mini compact green button icon"><i class="caret up icon"></i></button>
-                    </div>
-                    <div>
-                        <button class="ui basic mini compact button icon"><i class="caret down icon"></i></button>
-                    </div>
-                    @elseif($new->liked() == -1)
-                    <div>
-                        <button class="ui basic mini compact button icon"><i class="caret up icon"></i></button>
-                    </div>
-                    <div>    
-                        <button class="ui basic mini compact red button icon"><i class="caret down icon"></i></button>
-                    </div>
-                    @endif
+                    <button class="ui basic mini compact button icon {{ Auth::check()&&Auth::user()->hasUpvoted($new)?'green': '' }}"><i class="caret up icon"></i></button>
                 </form>
-            @else
-                <form class="" action="{{ URL::route('link.vote.up', [$new->id]) }}" method="POST">
+                <form class="" action="{{ URL::route('handleVote', [ 'table' => 'liens', 'item' => $new->id, 'voteType' => 'downvote']) }}" method="POST">
                     {!! csrf_field() !!}
-                    <button class="ui basic mini compact button icon"><i class="caret up icon"></i></button>
+                    <button class="ui basic mini compact button icon {{ Auth::check()&&Auth::user()->hasDownvoted($new)?'red': '' }}"><i class="caret down icon"></i></button>
                 </form>
-                <form class="" action="{{ URL::route('link.vote.down', [$new->id]) }}" method="POST">
-                    {!! csrf_field() !!}
-                    <button class="ui basic mini compact button icon"><i class="caret down icon"></i></button>
-                </form>
-            @endif
             </div>
                 <div class="row content">
                 <div class="ui header">

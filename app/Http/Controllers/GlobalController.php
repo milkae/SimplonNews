@@ -23,28 +23,22 @@ class GlobalController extends Controller
 		if($order == 'd'){
 			$liens = Lien::where('created_at', '>=', Carbon::now()->startOfDay());
 		} 
-		if($order == 'w') {
+		elseif($order == 'w') {
 			$liens = Lien::where('created_at', '>', Carbon::now()->startOfWeek());			
 		} 
-		if($order == 'm') {
+		elseif($order == 'm') {
 			$liens = Lien::where('created_at', '>=', Carbon::now()->startOfMonth());			
 		}
-		if($page !== 'all'){
-			if(isset($liens)) {
-				$liens = $liens->where('categorie', $page);
-			} else {
-				$liens = Lien::where('categorie', $page);	
-			}
-		}
-		if(!isset($liens)){
+		else {
 			$liens = Lien::whereNotNull('id');
 		}
+		if($page !== 'all'){
+			$liens = $liens->where('categorie', $page)->orderBy('baseScore', 'desc')->get();
+		} else {
+			$liens = $liens->orderBy('baseScore', 'desc')->get();
+		}
 
-		$sorted = $liens->get()->sortByDesc(function($val, $key){
-			return $val->likes->sum('val');
-		});
-
-		return view('news.liste', ['news' => $sorted, 'page' => $page, 'order' => $order]);
+		return view('news.liste', ['news' => $liens, 'page' => $page, 'order' => $order]);
     }
 
     public function getPoster(){

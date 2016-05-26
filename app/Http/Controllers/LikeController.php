@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
 use App\Like;
 use App\User;
 use App\Lien;
@@ -16,62 +17,62 @@ use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-    public function upVoteLien(Request $request, Lien $lien) {
-		$this->upVote($request->user(), $lien);
-		return back();
+    public function getVotePower($user) {
+        //add Role et notoriété calc
+        return 1;
     }
 
-    public function downVoteLien(Request $request, Lien $lien) {
-		$this->downVote($request->user(), $lien);
-		return back();
-    }
-    public function delVoteLien(Request $request, Lien $lien) {
-    	$this->delVote($request->user(), $lien);
-    	return back();
-    }
+    public function handleLikes($table, $itemId, $voteType) {
+        if($table == 'liens') {
+            $item = Lien::where('id', $itemId)->first();
+        } elseif ($table = 'comments') {
+            $item = Comment::where('id', $itemId)->first() ;     
+        }
+        $user = Auth::user();
+        $votePower = $this->getVotePower($user);
+        $hasUpvoted = $user->hasUpvoted($item);
+        $hasDownvoted = $user->hasDownvoted($item);
 
-    public function upVoteComment(Request $request, Comment $comment) {
-		$this->upVote($request->user(), $comment);
-		return back();
-    }
+        if (!$item || !$user || $voteType === 'upvote' && $hasUpvoted || $voteType === 'downvote' && $hasDownvoted) {
+            return back();
+        }
 
-    public function downVoteComment(Request $request, Comment $comment) {
-		$this->downVote($request->user(), $comment);
-		return back();
-    }
-    public function delVoteComment(Request $request, Comment $comment) {
-    	$this->delVote($request->user(), $comment);
-    	return back();
-    }
-
-    public function upVote($user, $lienOrComment) {
-		$l = new Like([
-			'user_id' => $user->id,
-			'val' => 1
-			]);
-		$lienOrComment->likes()->save($l);
-		$lienOrComment->user()->increment('karma');
-    }
-
-    public function downVote($user, $lienOrComment) {
-		$l = new Like([
-			'user_id' => $user->id,
-			'val' => -1
-			]);
-		$lienOrComment->likes()->save($l);
-		$lienOrComment->user()->decrement('karma');
-    }
-
-    public function delVote($user, $lienOrComment) {
-    	foreach ($lienOrComment->likes as $like) {
-    		if($like->user == $user) {
-    			if($like->val == 1){
-    				$lienOrComment->user()->decrement('karma');
-    			} elseif($like->val == -1){
-    				$lienOrComment->user()->increment('karma');			
-    			}
-    			$like->delete();
-    		}
-    	}
+        switch ($voteType) {
+            case 'upvote':
+                if($hasDownvoted) {
+                    $this->handleLikes($table, $itemId, 'deldownvote');
+                }
+                $l = new Like([
+                'user_id' => $user->id,
+                'val' => 1
+                ]);
+                $item->likes()->save($l);
+                $item->user()->increment('karma');
+                $item->increment('baseScore');
+                break;
+            case 'downvote':
+                if($hasUpvoted) {
+                    $this->handleLikes($table, $itemId, 'delupvote');
+                }
+                $l = new Like([
+                'user_id' => $user->id,
+                'val' => -1
+                ]);
+                $item->likes()->save($l);
+                $item->user()->decrement('karma');
+                $item->decrement('baseScore');
+                break;
+            case 'delupvote':
+                $item->user()->decrement('karma');
+                $item->decrement('baseScore');
+                $item->getVote($user)->delete();
+                break;
+            case 'deldownvote':
+                $item->user()->increment('karma');
+                $item->increment('baseScore');
+                $item->getVote($user)->delete();
+                break;
+        }
+        return back();
     }
 }

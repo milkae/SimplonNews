@@ -5,6 +5,8 @@ namespace App;
 use App\Karma;
 use App\Lien;
 use App\Comment;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -53,6 +55,22 @@ class User extends Authenticatable
             {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public function hasUpvoted($item) {
+        $like = $item->getVote(Auth::user());
+        if ($like && $like->val == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasDownvoted($item) {
+        $like = $item->getVote(Auth::user());
+        if ($like && $like->val == -1) {
+            return true;
         }
         return false;
     }

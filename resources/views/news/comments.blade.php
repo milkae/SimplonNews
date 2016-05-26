@@ -6,27 +6,14 @@
 @section('content')
 <h1><a href="{{ $news->lien }}">{{ $news->titre }}</a></h1>
 {{$news->user->name}} | {{ $news->likes->sum('val') }}<i class="empty star icon"></i>  
-@if($news->liked())
-    <form class="inlineForm" action="{{ URL::route('link.vote.del', [$news->id]) }}" method="POST">
+    <form class="inlineForm" action="{{ URL::route('handleVote', [ 'table' => 'liens', 'item' => $news->id, 'voteType' => 'upvote']) }}" method="POST">
         {!! csrf_field() !!}
-        @if($news->liked() == 1)
-            <button class="ui basic mini compact green button">+</i></button>
-            <button class="ui basic mini compact button">-</i></button>
-        @else
-            <button class="ui basic mini compact button">+</button>
-            <button class="ui basic mini compact red button">-</button>
-        @endif
+        <button class="ui basic mini compact button {{ Auth::check() && Auth::user()->hasUpvoted($news)? 'green' : '' }}">+</button>
     </form>
-@else
-    <form class="inlineForm" action="{{ URL::route('link.vote.up', [$news->id]) }}" method="POST">
+    <form class="inlineForm" action="{{ URL::route('handleVote', [ 'table' => 'liens', 'item' => $news->id, 'voteType' => 'downvote']) }}}" method="POST">
         {!! csrf_field() !!}
-        <button class="ui basic mini compact button">+</button>
+        <button class="ui basic mini compact button {{ Auth::check() && Auth::user()->hasDownvoted($news)? 'red' : '' }}">-</button>
     </form>
-    <form class="inlineForm" action="{{ URL::route('link.vote.down', [$news->id]) }}}" method="POST">
-        {!! csrf_field() !!}
-        <button class="ui basic mini compact button">-</button>
-    </form>
-@endif
 <div class="ui threaded comments">
     @if(Auth::check())
     <form class="ui reply form" action="{{ URL::route('comment.store') }}" method="POST">

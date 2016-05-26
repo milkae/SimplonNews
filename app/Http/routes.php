@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
 		return redirect()->route('index');
 	});
 
-	Route::get('/news/{page?}/{order?}', 'GlobalController@getIndex')->name('index');
+	Route::get('/home/{page?}/{order?}', 'GlobalController@getIndex')->name('index');
 
 	Route::get('/poster', 'GlobalController@getPoster')->name('link.form');
 	Route::get('/show/{lien}', 'GlobalController@getLink')->name('link.show');
@@ -47,6 +47,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/profil/{user}', 'ProfilController@getIndex')->name('user.profile');
 	Route::get('liste/users', 'ProfilController@getList')->name('users.list');
 
+	Route::post('/guestPost', 'GlobalController@storePost');
 	/*Authenticated routes */
 	Route::group(['middleware' => 'auth'], function () {
 		Route::get('/edit/profil', 'ProfilController@getEdit')->name('user.profile.edit');
@@ -60,12 +61,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.del');
 
 		/* Likes */
-		Route::post('upLink/{lien}', 'LikeController@upVoteLien')->name('link.vote.up');
-		Route::post('downLink/{lien}', 'LikeController@downVoteLien')->name('link.vote.down');
-		Route::post('delLinkVote/{lien}', 'LikeController@delVoteLien')->name('link.vote.del');
-		Route::post('upComment/{comment}', 'LikeController@upVoteComment')->name('comment.vote.up');
-		Route::post('downComment/{comment}', 'LikeController@downVoteComment')->name('comment.vote.down');
-		Route::post('delCommentVote/{comment}', 'LikeController@delVoteComment')->name('comment.vote.del');
+		Route::post('vote/{table}/{itemId}/{voteType}', 'LikeController@handleLikes')->name('handleVote');
 
 		Route::get('/admin', 'AdminController@getIndex')->name('admin.panel')->middleware('role:admin');
 		Route::post('/admin/set/role/{user}/{role}', 'AdminController@setRole')->name('set.role')->middleware('role:admin');

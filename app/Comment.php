@@ -31,13 +31,9 @@ class Comment extends Model
     {
         return $this->morphMany('App\Like', 'likeable');
     }
-
-    public function liked(){
-        foreach ($this->likes as $like) {
-            if($like->user == Auth::user()){
-                return $like->val;
-            }
-        }
-        return false;
+    
+    public function getVote($user) {
+        $like = $this->likes()->where('user_id', $user->id)->first();
+        return ($like) ? $like : false;
     }
 }
