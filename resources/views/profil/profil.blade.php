@@ -26,7 +26,7 @@
 							<i class="icon diamond big pink"></i>
 							@endif
 					</div>
-					@if (Auth::check() && Auth::user()->id == $user->id && url()->current() !== url('/edit/profil'))
+					@if (Auth::check() && Auth::user()->id == $user->id)
 					<div class="column">
 						<a href="{{ URL::route('user.profile.edit') }}" class="ui compact labeled icon pink inverted button"><i class="setting icon"></i> Editer </a>
 					</div>
@@ -56,7 +56,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 
 							<div class="item">
 								<div class="content">
@@ -66,7 +66,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 
 							<div class="item">
 								<div class="content">
@@ -76,13 +76,13 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="item">
 								<div class="content">
 									<div class="ui sub header">Github</div>
 									<div class="description">
 									@if($user->github)
-									<i class="ui circular github icon"></i>	
+									<i class="ui circular github icon"></i>
 										<a href="{{$user->github}}">{{ $user->name }}</a>
 									@endif
 									</div>
