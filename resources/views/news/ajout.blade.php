@@ -5,7 +5,7 @@
 
 @section('content')
         @include('common.errors')
-        @if(Auth::check)
+        @if(Auth::check())
         <form class="ui form" action="{{ URL::route('link.store') }}" method="POST">
         @else
         <form class="ui form" action="{{ URL('/guestPost') }}" method="POST">
